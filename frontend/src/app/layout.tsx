@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "HireScope - AI-Powered Job Matching for EU Careers",
@@ -17,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="font-sans">
         <nav className="border-b bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
             <a href="/" className="text-xl font-bold text-primary-600">
