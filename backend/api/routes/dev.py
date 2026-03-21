@@ -62,7 +62,7 @@ async def dev_token(
         user = User(
             email=email,
             name="Dev Candidate" if data.role == "candidate" else "Dev Recruiter",
-            hashed_password=pwd_context.hash("dev-password-not-used"),
+            hashed_password=pwd_context.hash("devpass123"),
             role=data.role,
         )
         db.add(user)
