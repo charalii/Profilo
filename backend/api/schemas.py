@@ -262,3 +262,29 @@ class AlertPreferenceUpdate(BaseModel):
     sources: list[str] | None = None
     locations: list[str] | None = None
     is_active: bool | None = None
+
+
+# ── Settings ──
+
+
+class UserUpdate(BaseModel):
+    name: str | None = None
+    email: EmailStr | None = None
+
+
+# ── Humanizer ──
+
+
+class ApplicationAnswerRequest(BaseModel):
+    question: str = Field(min_length=5)
+    vacancy_id: UUID | None = None
+    vacancy_title: str | None = None
+    vacancy_org: str | None = None
+    vacancy_description: str | None = None
+    word_limit: int | None = Field(None, ge=50, le=1000)
+    language: str | None = "en"
+
+
+class HumanizeRequest(BaseModel):
+    text: str = Field(min_length=10)
+    vacancy_id: UUID | None = None

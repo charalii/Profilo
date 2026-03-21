@@ -98,6 +98,25 @@ export interface CandidateSearchResponse {
   total: number;
 }
 
+export interface AlertPreference {
+  id: string;
+  frequency: string;
+  min_match_score: number;
+  sources: string[];
+  locations: string[];
+  is_active: boolean;
+}
+
+export interface ApplicationAnswerRequest {
+  question: string;
+  vacancy_id?: string;
+  vacancy_title?: string;
+  vacancy_org?: string;
+  vacancy_description?: string;
+  word_limit?: number;
+  language?: string;
+}
+
 export interface CVProfile {
   id: string;
   raw_text: string;

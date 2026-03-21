@@ -1,5 +1,7 @@
 import type {
+  AlertPreference,
   Application,
+  ApplicationAnswerRequest,
   ApplicationRecruiter,
   CandidateSearchResponse,
   CVProfile,
@@ -239,5 +241,45 @@ export const api = {
       `/api/dev/scrape/${sourceId}`,
       { method: "POST" }
     );
+  },
+
+  // ── Settings ──
+
+  updateUser(data: { name?: string; email?: string }) {
+    return request<User>("/api/settings/profile", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    });
+  },
+
+  getAlertPreferences() {
+    return request<AlertPreference | null>("/api/settings/alerts");
+  },
+
+  updateAlertPreferences(data: Partial<AlertPreference>) {
+    return request<AlertPreference>("/api/settings/alerts", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    });
+  },
+
+  deleteAlertPreferences() {
+    return request<void>("/api/settings/alerts", { method: "DELETE" });
+  },
+
+  // ── Humanizer (Application Answers) ──
+
+  generateApplicationAnswer(data: ApplicationAnswerRequest) {
+    return request<GeneratedDoc>("/api/generate/application-answer", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  },
+
+  humanizeText(text: string, vacancyId?: string) {
+    return request<GeneratedDoc>("/api/generate/humanize", {
+      method: "POST",
+      body: JSON.stringify({ text, vacancy_id: vacancyId }),
+    });
   },
 };

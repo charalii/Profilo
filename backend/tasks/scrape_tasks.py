@@ -11,6 +11,10 @@ from backend.scrapers.eda import EDAScraper
 from backend.scrapers.nato import NATOScraper
 from backend.scrapers.nspa import NSPAScraper
 from backend.scrapers.eurobrussels import EuroBrusselsScraper
+from backend.scrapers.eu_careers import EUCareersScraper
+from backend.scrapers.euiss import EUISScraper
+from backend.scrapers.frontex import FrontexScraper
+from backend.scrapers.euspa import EUSPAScraper
 from backend.scrapers.registry import get_scraper_config
 from backend.tasks.celery_app import celery_app
 
@@ -22,6 +26,10 @@ SCRAPER_CLASSES = {
     "nato_is": NATOScraper,
     "nspa": NSPAScraper,
     "eurobrussels": EuroBrusselsScraper,
+    "eu_careers": EUCareersScraper,
+    "euiss": EUISScraper,
+    "frontex": FrontexScraper,
+    "euspa": EUSPAScraper,
 }
 
 
@@ -80,9 +88,66 @@ def deactivate_expired() -> int:
 
 @celery_app.task(name="recompute_all_matches")
 def recompute_all_matches() -> str:
-    # Triggers match recomputation for all users
-    # In production, this would iterate users and call compute_matches
-    return "Match recomputation triggered"
+    from backend.api.models import CVProfile, Match
+    from backend.services.matching import ProfileFeatures, compute_match
+
+    async def _recompute():
+        async with async_session() as db:
+            # Get all CV profiles
+            cv_result = await db.execute(select(CVProfile))
+            profiles = cv_result.scalars().all()
+
+            # Get all active vacancies
+            vac_result = await db.execute(
+                select(Vacancy).where(Vacancy.is_active == True)
+            )
+            vacancies = vac_result.scalars().all()
+
+            count = 0
+            for cv in profiles:
+                pf = ProfileFeatures(
+                    has_legal=cv.has_legal,
+                    has_defence=cv.has_defence,
+                    has_procurement=cv.has_procurement,
+                    has_policy=cv.has_policy,
+                    has_eu=cv.has_eu,
+                    has_international=cv.has_international,
+                    years_exp=cv.years_experience,
+                    education_level=cv.education_level or "bachelor",
+                    has_cast=cv.has_cast,
+                    has_epso=cv.has_epso,
+                    language_count=cv.language_count,
+                    has_c2=cv.has_c2,
+                    keywords={k.lower() for k in (cv.keywords or [])},
+                )
+                for vac in vacancies:
+                    result = compute_match(pf, vac.keywords or [])
+
+                    stmt = pg_insert(Match).values(
+                        user_id=cv.user_id,
+                        cv_profile_id=cv.id,
+                        vacancy_id=vac.id,
+                        match_score=result["score"],
+                        matched_keywords=result["matched_keywords"],
+                        missing_keywords=result["missing_keywords"],
+                    )
+                    stmt = stmt.on_conflict_do_update(
+                        constraint="uq_match_cv_vacancy",
+                        set_={
+                            "match_score": stmt.excluded.match_score,
+                            "matched_keywords": stmt.excluded.matched_keywords,
+                            "missing_keywords": stmt.excluded.missing_keywords,
+                        },
+                    )
+                    await db.execute(stmt)
+                    count += 1
+
+            await db.commit()
+            return count
+
+    total = asyncio.run(_recompute())
+    logger.info("Recomputed %d matches", total)
+    return f"Recomputed {total} matches"
 
 
 @celery_app.task(name="send_alerts")

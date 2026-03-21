@@ -9,7 +9,9 @@ from backend.api.routes import (
     cv,
     dev,
     generation,
+    humanizer,
     matching,
+    settings,
     vacancies,
 )
 
@@ -50,6 +52,8 @@ for api_prefix in ("/api", "/api/v1"):
     app.include_router(applications.router, prefix=f"{api_prefix}/applications", tags=["Applications"])
     app.include_router(analytics.router, prefix=f"{api_prefix}/analytics", tags=["Analytics"])
     app.include_router(candidates.router, prefix=f"{api_prefix}/candidates", tags=["Candidates"])
+    app.include_router(settings.router, prefix=f"{api_prefix}/settings", tags=["Settings"])
+    app.include_router(humanizer.router, prefix=f"{api_prefix}/generate", tags=["Generation"])
 
 
 @app.get("/api/health")

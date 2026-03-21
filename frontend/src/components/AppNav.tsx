@@ -55,6 +55,12 @@ export function AppNav() {
       >
         Profile
       </Link>
+      <Link
+        href="/writer"
+        className={pathname === "/writer" ? "nav-app-active" : ""}
+      >
+        Writer
+      </Link>
     </>
   );
 
