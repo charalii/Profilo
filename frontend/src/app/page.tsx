@@ -116,7 +116,7 @@ export default function Home() {
           you — with a match score, a tailored cover letter, and a plan to get hired.
         </p>
         <div className="hero-ctas">
-          <a href="#signup" className="btn-primary">
+          <a href="/signup" className="btn-primary">
             Upload Your CV — Get Your First Matches Free
           </a>
           <a href="#features" className="btn-secondary">
@@ -235,7 +235,7 @@ export default function Home() {
           cover letter. The roles you&apos;ve been searching for are already waiting —
           HireScope just connects the dots.
         </p>
-        <a href="#" className="btn-primary">
+        <a href="/signup" className="btn-primary">
           Get Started Free — Upload Your CV
         </a>
         <p className="final-cta-note">

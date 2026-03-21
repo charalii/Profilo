@@ -25,12 +25,12 @@ describe("Landing Page", () => {
       ).toBeInTheDocument();
     });
 
-    it("renders the primary CTA button", () => {
-      expect(
-        screen.getByRole("link", {
-          name: /Upload Your CV — Get Your First Matches Free/i,
-        })
-      ).toBeInTheDocument();
+    it("renders the primary CTA button linking to signup", () => {
+      const link = screen.getByRole("link", {
+        name: /Upload Your CV — Get Your First Matches Free/i,
+      });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute("href", "/signup");
     });
 
     it("renders the secondary CTA button", () => {
@@ -163,12 +163,12 @@ describe("Landing Page", () => {
       ).toBeInTheDocument();
     });
 
-    it("renders the final CTA button", () => {
-      expect(
-        screen.getByRole("link", {
-          name: /Get Started Free — Upload Your CV/i,
-        })
-      ).toBeInTheDocument();
+    it("renders the final CTA button linking to signup", () => {
+      const link = screen.getByRole("link", {
+        name: /Get Started Free — Upload Your CV/i,
+      });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute("href", "/signup");
     });
 
     it("renders the free plan note", () => {
