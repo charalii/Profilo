@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "HireScope - AI-Powered Job Matching for EU Careers",
+  title: "HireScope — AI Job Matching for EU & International Careers",
   description:
     "Match your CV against live EU, NATO, and international organization vacancies. Get AI-generated cover letters and CV optimization.",
 };
@@ -14,32 +14,32 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-sans">
-        <nav className="border-b bg-white">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-            <a href="/" className="text-xl font-bold text-primary-600">
-              HireScope
-            </a>
-            <div className="flex items-center gap-4">
-              <a href="/dashboard" className="text-sm text-gray-600 hover:text-gray-900">
-                Dashboard
-              </a>
-              <a href="/tracker" className="text-sm text-gray-600 hover:text-gray-900">
-                Tracker
-              </a>
-              <a href="/pricing" className="text-sm text-gray-600 hover:text-gray-900">
-                Pricing
-              </a>
-              <a
-                href="/login"
-                className="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700"
-              >
-                Sign In
-              </a>
-            </div>
-          </div>
+      <body>
+        <nav className="site-nav">
+          <a href="/" className="nav-logo">
+            Hire<span>Scope</span>
+          </a>
+          <ul className="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+          </ul>
+          <a href="#signup" className="nav-cta">Get Started Free</a>
         </nav>
-        <main>{children}</main>
+        {children}
+        <footer className="site-footer">
+          <a href="/" className="footer-logo">
+            Hire<span>Scope</span>
+          </a>
+          <p>&copy; 2026 HireScope. All rights reserved.</p>
+          <div className="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Policy</a>
+            <a href="mailto:hello@hirescope.eu">Contact</a>
+          </div>
+        </footer>
       </body>
     </html>
   );
