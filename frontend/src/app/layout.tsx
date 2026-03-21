@@ -25,7 +25,7 @@ export default function RootLayout({
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#pricing">Pricing</a></li>
           </ul>
-          <a href="#signup" className="nav-cta">Get Started Free</a>
+          <a href="/signup" className="nav-cta">Get Started Free</a>
         </nav>
         {children}
         <footer className="site-footer">
