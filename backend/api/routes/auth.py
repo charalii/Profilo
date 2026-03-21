@@ -3,7 +3,7 @@ from passlib.context import CryptContext
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.api.deps import create_access_token, get_db
+from backend.api.deps import create_access_token, get_current_user, get_db
 from backend.api.models import User
 from backend.api.schemas import TokenResponse, UserLogin, UserRegister, UserResponse
 
@@ -21,12 +21,18 @@ async def register(data: UserRegister, db: AsyncSession = Depends(get_db)):
         email=data.email,
         name=data.name,
         hashed_password=pwd_context.hash(data.password),
+        role=data.role,
     )
     db.add(user)
     await db.commit()
     await db.refresh(user)
 
     return TokenResponse(access_token=create_access_token(user.id))
+
+
+@router.get("/me", response_model=UserResponse)
+async def me(user: User = Depends(get_current_user)):
+    return user
 
 
 @router.post("/login", response_model=TokenResponse)

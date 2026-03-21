@@ -92,3 +92,26 @@ def send_alerts(frequency: str) -> int:
         async with async_session() as db:
             return await send_alerts_for_frequency(frequency, db)
     return asyncio.run(_send())
+
+
+@celery_app.task(name="notify_application_status")
+def notify_application_status(
+    to_email: str,
+    candidate_name: str | None,
+    job_title: str,
+    organization: str,
+    old_status: str,
+    new_status: str,
+) -> None:
+    from backend.services.email_alerts import notify_application_status_change
+
+    asyncio.run(
+        notify_application_status_change(
+            to_email=to_email,
+            candidate_name=candidate_name,
+            job_title=job_title,
+            organization=organization,
+            old_status=old_status,
+            new_status=new_status,
+        )
+    )

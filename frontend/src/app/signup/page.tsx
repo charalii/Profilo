@@ -7,13 +7,14 @@ export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<"candidate" | "recruiter">("candidate");
   const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     try {
-      const data = await api.register(name, email, password);
+      const data = await api.register(name, email, password, role);
       localStorage.setItem("token", data.access_token);
       window.location.href = "/dashboard";
     } catch {
@@ -22,61 +23,74 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-[80vh] items-center justify-center">
-      <div className="w-full max-w-md rounded-xl border p-8">
-        <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
-        <p className="mt-2 text-sm text-gray-600">
+    <div className="flex min-h-[80vh] items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-xl border border-slate-700 bg-slate-900/80 p-8 shadow-xl backdrop-blur">
+        <h1 className="text-2xl font-bold text-white">Create Account</h1>
+        <p className="mt-2 text-sm text-slate-400">
           Start matching with EU &amp; international vacancies.
         </p>
 
         {error && (
-          <div className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-600">
+          <div className="mt-4 rounded-md border border-rose-800 bg-rose-950/40 p-3 text-sm text-rose-200">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Full Name</label>
+            <label className="block text-sm font-medium text-slate-300">Full Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 w-full rounded-md border px-3 py-2 text-sm"
+              className="mt-1 w-full rounded-md border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <label className="block text-sm font-medium text-slate-300">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 w-full rounded-md border px-3 py-2 text-sm"
+              className="mt-1 w-full rounded-md border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <label className="block text-sm font-medium text-slate-300">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={8}
-              className="mt-1 w-full rounded-md border px-3 py-2 text-sm"
+              className="mt-1 w-full rounded-md border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-white"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-300">I am a</label>
+            <select
+              value={role}
+              onChange={(e) =>
+                setRole(e.target.value as "candidate" | "recruiter")
+              }
+              className="mt-1 w-full rounded-md border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-white"
+            >
+              <option value="candidate">Candidate</option>
+              <option value="recruiter">Recruiter</option>
+            </select>
           </div>
           <button
             type="submit"
-            className="w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700"
+            className="w-full rounded-md bg-[#1A56DB] px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
           >
             Create Account
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-gray-500">
+        <p className="mt-4 text-center text-sm text-slate-500">
           Already have an account?{" "}
-          <a href="/login" className="text-primary-600 hover:underline">
+          <a href="/login" className="text-cyan-400 hover:underline">
             Sign in
           </a>
         </p>

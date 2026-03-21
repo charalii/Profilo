@@ -3,7 +3,11 @@
 import { useState, useRef } from "react";
 import { api } from "@/lib/api";
 
-export function CVUpload() {
+interface CVUploadProps {
+  onUploaded?: () => void;
+}
+
+export function CVUpload({ onUploaded }: CVUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -27,6 +31,7 @@ export function CVUpload() {
     try {
       await api.uploadCV(file);
       setSuccess(true);
+      onUploaded?.();
     } catch {
       setError("Upload failed. Please sign in first.");
     } finally {

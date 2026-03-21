@@ -29,6 +29,8 @@ class User(Base):
     name = Column(String(255))
     hashed_password = Column(String(255))
     plan = Column(String(20), default="free")
+    # "candidate" | "recruiter"
+    role = Column(String(20), default="candidate", nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     last_login = Column(DateTime)
 
@@ -37,6 +39,11 @@ class User(Base):
     generated_docs = relationship("GeneratedDoc", back_populates="user", cascade="all, delete-orphan")
     applications = relationship("Application", back_populates="user", cascade="all, delete-orphan")
     alert_preferences = relationship("AlertPreference", back_populates="user", cascade="all, delete-orphan")
+    posted_vacancies = relationship(
+        "Vacancy",
+        back_populates="posted_by_user",
+        foreign_keys="Vacancy.posted_by_user_id",
+    )
 
 
 class CVProfile(Base):
@@ -75,6 +82,11 @@ class Vacancy(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     source = Column(String(50), nullable=False)
     external_id = Column(String(255))
+    posted_by_user_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     title = Column(String(500), nullable=False)
     organization = Column(String(255), nullable=False)
     location = Column(String(255))
@@ -97,6 +109,7 @@ class Vacancy(Base):
     matches = relationship("Match", back_populates="vacancy", cascade="all, delete-orphan")
     generated_docs = relationship("GeneratedDoc", back_populates="vacancy", cascade="all, delete-orphan")
     applications = relationship("Application", back_populates="vacancy", cascade="all, delete-orphan")
+    posted_by_user = relationship("User", back_populates="posted_vacancies", foreign_keys=[posted_by_user_id])
 
 
 class Match(Base):

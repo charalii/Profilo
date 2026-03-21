@@ -18,6 +18,76 @@ SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 FROM_EMAIL = os.getenv("FROM_EMAIL", "alerts@hirescope.app")
 
 
+async def send_application_status_email(
+    user_email: str,
+    user_name: str | None,
+    job_title: str,
+    organization: str,
+    old_status: str,
+    new_status: str,
+) -> None:
+    """Notify a candidate when their application status changes."""
+    if not SMTP_USER or not SMTP_PASSWORD:
+        logger.warning("SMTP not configured, skipping application email to %s", user_email)
+        return
+
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = f"HireScope: Application update — {job_title}"
+    msg["From"] = FROM_EMAIL
+    msg["To"] = user_email
+
+    text_content = (
+        f"Hi {user_name or 'there'},\n\n"
+        f"Your application status for {job_title} at {organization} changed "
+        f"from {old_status} to {new_status}.\n\n"
+        "Log in to HireScope to view details.\n"
+    )
+    html_content = f"""
+    <html>
+    <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #1a56db;">Application updated</h2>
+        <p>Hi {user_name or 'there'},</p>
+        <p>Your application for <strong>{job_title}</strong> at {organization} is now
+        <strong>{new_status}</strong> (was {old_status}).</p>
+        <p><a href="https://hirescope.app/tracker" style="color: #1a56db;">Open tracker</a></p>
+    </body></html>
+    """
+
+    msg.attach(MIMEText(text_content, "plain"))
+    msg.attach(MIMEText(html_content, "html"))
+
+    await aiosmtplib.send(
+        msg,
+        hostname=SMTP_HOST,
+        port=SMTP_PORT,
+        username=SMTP_USER,
+        password=SMTP_PASSWORD,
+        use_tls=True,
+    )
+
+
+async def notify_application_status_change(
+    *,
+    to_email: str,
+    candidate_name: str | None,
+    job_title: str,
+    organization: str,
+    old_status: str,
+    new_status: str,
+) -> None:
+    try:
+        await send_application_status_email(
+            to_email,
+            candidate_name,
+            job_title,
+            organization,
+            old_status,
+            new_status,
+        )
+    except Exception as e:
+        logger.error("Application status email failed for %s: %s", to_email, e)
+
+
 async def send_alert_email(user_email: str, user_name: str, matches: list[dict]) -> None:
     """Send a match alert email to a user."""
     if not SMTP_USER or not SMTP_PASSWORD:

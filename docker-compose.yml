@@ -24,6 +24,8 @@ services:
       REDIS_URL: redis://redis:6379/0
       SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      # Demo JWT + /api/dev/* scrape helpers (never enable in production)
+      HIRESCOPE_DEV: ${HIRESCOPE_DEV:-0}
     depends_on:
       - db
       - redis
@@ -53,6 +55,7 @@ services:
       - "3000:3000"
     environment:
       NEXT_PUBLIC_API_URL: http://backend:8000
+      NEXT_PUBLIC_HIRESCOPE_DEV: ${NEXT_PUBLIC_HIRESCOPE_DEV:-0}
     depends_on:
       - backend
 

@@ -11,6 +11,7 @@ class UserRegister(BaseModel):
     email: EmailStr
     password: str = Field(min_length=8)
     name: str | None = None
+    role: str = Field(default="candidate", pattern="^(candidate|recruiter)$")
 
 
 class UserLogin(BaseModel):
@@ -23,6 +24,7 @@ class UserResponse(BaseModel):
     email: str
     name: str | None
     plan: str
+    role: str
     created_at: datetime
 
     model_config = {"from_attributes": True}
@@ -81,6 +83,7 @@ class CVProfileUpdate(BaseModel):
 class VacancyResponse(BaseModel):
     id: UUID
     source: str
+    posted_by_user_id: UUID | None = None
     title: str
     organization: str
     location: str | None
@@ -94,6 +97,31 @@ class VacancyResponse(BaseModel):
     scraped_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class VacancyCreate(BaseModel):
+    title: str = Field(min_length=1, max_length=500)
+    organization: str = Field(min_length=1, max_length=255)
+    location: str | None = Field(None, max_length=255)
+    contract_type: str | None = Field(None, max_length=100)
+    deadline: date | None = None
+    description: str | None = None
+    url: str | None = Field(None, max_length=1000)
+    keywords: list[str] = Field(default_factory=list)
+    salary_range: str | None = Field(None, max_length=100)
+
+
+class VacancyUpdate(BaseModel):
+    title: str | None = Field(None, min_length=1, max_length=500)
+    organization: str | None = Field(None, min_length=1, max_length=255)
+    location: str | None = None
+    contract_type: str | None = None
+    deadline: date | None = None
+    description: str | None = None
+    url: str | None = None
+    keywords: list[str] | None = None
+    salary_range: str | None = None
+    is_active: bool | None = None
 
 
 class VacancyListResponse(BaseModel):
@@ -172,6 +200,46 @@ class ApplicationResponse(BaseModel):
     updated_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class ApplicationRecruiterResponse(BaseModel):
+    id: UUID
+    vacancy: VacancyResponse
+    status: str
+    applied_at: date | None
+    notes: str | None
+    created_at: datetime
+    updated_at: datetime
+    candidate_user_id: UUID
+    candidate_name: str | None
+    candidate_email: str
+
+    model_config = {"from_attributes": True}
+
+
+class RecruiterAnalytics(BaseModel):
+    open_jobs: int
+    total_applications: int
+    by_status: dict[str, int]
+    applications_last_7_days: int
+
+
+class CandidateSearchItem(BaseModel):
+    user_id: UUID
+    name: str | None
+    email: str
+    cv_profile_id: UUID
+    years_experience: int
+    education_level: str | None
+    keywords: list[str]
+    updated_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class CandidateSearchResponse(BaseModel):
+    items: list[CandidateSearchItem]
+    total: int
 
 
 # ── Alerts ──

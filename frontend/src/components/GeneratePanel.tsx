@@ -31,22 +31,22 @@ export function GeneratePanel({ vacancyId, vacancyTitle }: Props) {
   }
 
   return (
-    <div className="mt-4 rounded-lg border bg-gray-50 p-4">
-      <p className="text-xs font-medium text-gray-500">AI Generation for:</p>
-      <p className="text-sm font-semibold text-gray-900">{vacancyTitle}</p>
+    <div className="mt-4 rounded-lg border border-slate-600 bg-slate-950/40 p-4">
+      <p className="text-xs font-medium text-slate-500">AI Generation for:</p>
+      <p className="text-sm font-semibold text-slate-100">{vacancyTitle}</p>
 
       <div className="mt-3 flex gap-2">
         <button
           onClick={() => handleGenerate("cover_letter")}
           disabled={loading !== null}
-          className="rounded-md border bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+          className="rounded-md border border-slate-600 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800 disabled:opacity-50"
         >
           {loading === "cover_letter" ? "Generating..." : "Cover Letter"}
         </button>
         <button
           onClick={() => handleGenerate("cv_optimization")}
           disabled={loading !== null}
-          className="rounded-md border bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+          className="rounded-md border border-slate-600 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800 disabled:opacity-50"
         >
           {loading === "cv_optimization" ? "Generating..." : "CV Optimization"}
         </button>
@@ -54,8 +54,8 @@ export function GeneratePanel({ vacancyId, vacancyTitle }: Props) {
 
       {coverLetter && (
         <div className="mt-4">
-          <h4 className="text-xs font-semibold text-gray-700">Cover Letter</h4>
-          <div className="mt-2 max-h-60 overflow-y-auto whitespace-pre-wrap rounded border bg-white p-3 text-xs text-gray-800">
+          <h4 className="text-xs font-semibold text-slate-300">Cover Letter</h4>
+          <div className="mt-2 max-h-60 overflow-y-auto whitespace-pre-wrap rounded border border-slate-700 bg-slate-950/40 p-3 text-xs text-slate-200">
             {coverLetter}
           </div>
         </div>
@@ -63,8 +63,8 @@ export function GeneratePanel({ vacancyId, vacancyTitle }: Props) {
 
       {cvOptimization && (
         <div className="mt-4">
-          <h4 className="text-xs font-semibold text-gray-700">CV Optimization</h4>
-          <div className="mt-2 max-h-60 overflow-y-auto whitespace-pre-wrap rounded border bg-white p-3 text-xs text-gray-800">
+          <h4 className="text-xs font-semibold text-slate-300">CV Optimization</h4>
+          <div className="mt-2 max-h-60 overflow-y-auto whitespace-pre-wrap rounded border border-slate-700 bg-slate-950/40 p-3 text-xs text-slate-200">
             {cvOptimization}
           </div>
         </div>

@@ -33,6 +33,11 @@ body {
   backdrop-filter: blur(12px);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 5%; height: 64px;
+  gap: 1rem;
+}
+.site-nav .nav-app-links {
+  flex: 1;
+  justify-content: center;
 }
 .nav-logo {
   font-size: 1.3rem; font-weight: 700; color: var(--white);
@@ -232,6 +237,74 @@ details[open] summary::after { transform: rotate(45deg); }
 .footer-links { display: flex; gap: 1.5rem; }
 .footer-links a { color: #475569; font-size: .82rem; text-decoration: none; }
 .footer-links a:hover { color: #94A3B8; }
+
+/* ── App shell (post-login & tools) ── */
+.app-main {
+  min-height: calc(100vh - 64px - 80px);
+  background: #0f172a;
+  color: #e2e8f0;
+  padding-bottom: 2rem;
+}
+.app-footer {
+  background: #0d1b2a;
+  padding: 1.5rem 5%;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.app-footer p {
+  color: #64748b;
+  font-size: 0.82rem;
+}
+.nav-app-links {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.nav-app-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+.nav-app-links a:hover {
+  color: var(--white);
+}
+.nav-app-active {
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+.nav-app-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.nav-user-email {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nav-app-logout {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.nav-app-logout:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.nav-app-login {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
 
 @media (max-width: 640px) {
   .site-nav .nav-links { display: none; }
