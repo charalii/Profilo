@@ -107,13 +107,19 @@ export default function JobsPage() {
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
+                  <Link
+                    href={`/jobs/${v.id}`}
+                    className="rounded-lg border border-slate-600 px-3 py-1.5 text-sm text-slate-200 hover:border-slate-500"
+                  >
+                    Details
+                  </Link>
                   <a
                     href={v.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="rounded-lg border border-slate-600 px-3 py-1.5 text-sm text-slate-200 hover:border-slate-500"
                   >
-                    View
+                    Original
                   </a>
                   <button
                     type="button"

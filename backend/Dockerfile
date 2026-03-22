@@ -6,11 +6,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt ./backend/requirements.txt
+RUN pip install --no-cache-dir -r backend/requirements.txt
 RUN playwright install chromium --with-deps
 
-COPY . .
+# Copy backend code into /app/backend so the module path "backend.api.main" works
+COPY . ./backend/
 
 EXPOSE 8000
 

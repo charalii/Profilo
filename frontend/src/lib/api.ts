@@ -282,4 +282,8 @@ export const api = {
       body: JSON.stringify({ text, vacancy_id: vacancyId }),
     });
   },
+
+  getGenerationHistory() {
+    return request<GeneratedDoc[]>("/api/generate/history");
+  },
 };

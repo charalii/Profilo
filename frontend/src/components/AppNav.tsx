@@ -61,6 +61,12 @@ export function AppNav() {
       >
         Writer
       </Link>
+      <Link
+        href="/settings"
+        className={pathname === "/settings" ? "nav-app-active" : ""}
+      >
+        Settings
+      </Link>
     </>
   );
 

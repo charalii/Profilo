@@ -1,6 +1,14 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+import logging
+import time
+from collections import defaultdict
+from contextlib import asynccontextmanager
 
+from fastapi import FastAPI, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+
+from backend.api.deps import engine
+from backend.api.models import Base
 from backend.api.routes import (
     analytics,
     applications,
@@ -15,10 +23,26 @@ from backend.api.routes import (
     vacancies,
 )
 
+logger = logging.getLogger("hirescope")
+
+
+@asynccontextmanager
+async def lifespan(application: FastAPI):
+    # Startup: create tables if they don't exist
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    logger.info("Database tables ready")
+    yield
+    # Shutdown: dispose engine connection pool
+    await engine.dispose()
+    logger.info("Database connections closed")
+
+
 app = FastAPI(
     title="HireScope API",
     description="AI-Powered Job Matching Platform for EU/International Careers",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 # Browser sends exact Origin (scheme + host + port). Next dev may use 3000, 3001, etc.
@@ -29,6 +53,49 @@ _LOCAL_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://127.0.0.1:3001",
 ]
+
+# ── Rate limiter ──
+# Tracks per-IP request counts with a sliding window.
+# /api/generate/* endpoints get a tighter limit (20 req/min) to control API costs.
+# All other endpoints: 120 req/min.
+
+_rate_buckets: dict[str, list[float]] = defaultdict(list)
+
+# Paths that start with these prefixes get the tight limit
+_EXPENSIVE_PREFIXES = ("/api/generate/", "/api/v1/generate/")
+_TIGHT_LIMIT = 20  # per minute
+_DEFAULT_LIMIT = 120  # per minute
+_WINDOW = 60.0  # seconds
+
+
+class RateLimitMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        client_ip = request.client.host if request.client else "unknown"
+        path = request.url.path
+
+        is_expensive = any(path.startswith(p) for p in _EXPENSIVE_PREFIXES)
+        limit = _TIGHT_LIMIT if is_expensive else _DEFAULT_LIMIT
+        bucket_key = f"{client_ip}:{'gen' if is_expensive else 'all'}"
+
+        now = time.monotonic()
+        # Prune old entries
+        _rate_buckets[bucket_key] = [
+            t for t in _rate_buckets[bucket_key] if now - t < _WINDOW
+        ]
+
+        if len(_rate_buckets[bucket_key]) >= limit:
+            return Response(
+                content='{"detail":"Rate limit exceeded. Please try again later."}',
+                status_code=429,
+                media_type="application/json",
+                headers={"Retry-After": "60"},
+            )
+
+        _rate_buckets[bucket_key].append(now)
+        return await call_next(request)
+
+
+app.add_middleware(RateLimitMiddleware)
 
 app.add_middleware(
     CORSMiddleware,

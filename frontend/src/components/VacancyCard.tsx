@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { MatchBadge } from "./MatchBadge";
 import { GeneratePanel } from "./GeneratePanel";
 import type { MatchResult } from "@/lib/types";
@@ -73,14 +74,12 @@ export function VacancyCard({ match }: Props) {
       )}
 
       <div className="mt-4 flex items-center gap-2">
-        <a
-          href={vacancy.url}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href={`/jobs/${vacancy.id}`}
           className="rounded-md border border-slate-600 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800"
         >
-          View Vacancy
-        </a>
+          Details
+        </Link>
         <button
           onClick={() => setShowGenerate(!showGenerate)}
           className="rounded-md bg-[#1A56DB] px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-600"
