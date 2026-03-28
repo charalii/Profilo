@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profilo — EU Career Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:      #141210;
+  --ink-2:    #4A4540;
+  --ink-3:    #8A8580;
+  --sand:     #F5F2EE;
+  --sand-2:   #EDE9E4;
+  --white:    #FFFFFF;
+  --accent:   #B85C38;
+  --accent-2: #8B3A1E;
+  --border:   #DDD9D3;
+  --serif:    'Cormorant Garamond', Georgia, serif;
+  --sans:     'Inter', -apple-system, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── NAV ─────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 60px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -.2px;
+  text-decoration: none;
+}
+.nav-logo em { color: var(--accent); font-style: normal; }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+  text-decoration: none;
+  letter-spacing: .2px;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  background: var(--ink);
+  color: var(--white) !important;
+  padding: 9px 22px;
+  border-radius: 3px;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: .3px !important;
+  transition: background .2s !important;
+}
+.nav-cta:hover { background: var(--accent) !important; color: var(--white) !important; }
+
+/* ── SECTIONS ────────────────────────────────────────── */
+section { position: relative; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+.container-sm { max-width: 760px; margin: 0 auto; padding: 0 48px; }
+.container-xs { max-width: 580px; margin: 0 auto; padding: 0 48px; }
+
+/* ── HERO ────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--white);
+  padding-top: 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(184,92,56,.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 4px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(44px, 7vw, 88px);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -.5px;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+.hero-sub {
+  font-size: 17px;
+  color: var(--ink-2);
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 auto 44px;
+  font-weight: 400;
+}
+.hero-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.btn-dark {
+  background: var(--ink);
+  color: var(--white);
+  border: none;
+  border-radius: 3px;
+  padding: 16px 36px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .4px;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: background .2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-dark:hover { background: var(--accent); }
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 15px 32px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: border-color .2s, color .2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-outline:hover { border-color: var(--ink-2); }
+.hero-note {
+  margin-top: 20px;
+  font-size: 12.5px;
+  color: var(--ink-3);
+  letter-spacing: .2px;
+}
+
+/* ── PROOF BAR ───────────────────────────────────────── */
+.proof-bar {
+  background: var(--sand);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 22px 0;
+}
+.proof-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+  flex-wrap: wrap;
+}
+.proof-item {
+  display: flex; align-items: center; gap: 12px;
+}
+.proof-num {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -.3px;
+  line-height: 1;
+}
+.proof-lbl {
+  font-size: 12px;
+  color: var(--ink-3);
+  font-weight: 500;
+  letter-spacing: .3px;
+  line-height: 1.4;
+  max-width: 100px;
+}
+.proof-div { width: 1px; height: 36px; background: var(--border); }
+
+/* ── PROBLEM ─────────────────────────────────────────── */
+.section-problem {
+  padding: 120px 0;
+  background: var(--white);
+}
+.overline {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 20px;
+  display: block;
+}
+.section-h {
+  font-family: var(--serif);
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--ink);
+  letter-spacing: -.3px;
+  margin-bottom: 20px;
+}
+.section-h em { font-style: italic; color: var(--accent); }
+.section-body {
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.8;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 60px;
+}
+.problem-cell {
+  background: var(--white);
+  padding: 36px 40px;
+}
+.problem-cell-num {
+  font-family: var(--serif);
+  font-size: 52px;
+  font-weight: 500;
+  color: var(--sand-2);
+  line-height: 1;
+  margin-bottom: 14px;
+}
+.problem-cell-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.problem-cell-text {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+
+/* ── QUOTE ───────────────────────────────────────────── */
+.section-quote {
+  background: var(--ink);
+  padding: 100px 0;
+}
+.quote-text {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.4;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.quote-attr {
+  text-align: center;
+  font-size: 12.5px;
+  color: rgba(255,255,255,.45);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ── SOLUTION ────────────────────────────────────────── */
+.section-solution { padding: 120px 0; background: var(--sand); }
+
+.solution-lead {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-bottom: 80px;
+}
+.solution-steps { display: flex; flex-direction: column; gap: 0; }
+.solution-step {
+  display: flex;
+  gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.solution-step:first-child { padding-top: 0; }
+.solution-step:last-child { border-bottom: none; padding-bottom: 0; }
+.step-num {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent);
+  width: 32px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.step-title { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.step-text  { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+
+/* ── VALUE STACK ─────────────────────────────────────── */
+.section-value { padding: 120px 0; background: var(--white); }
+.value-table {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 56px;
+}
+.value-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 20px;
+  align-items: center;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.value-row:last-child { border-bottom: none; }
+.value-row:hover { background: var(--sand); }
+.value-row-head {
+  background: var(--sand);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.value-row-head:hover { background: var(--sand); }
+.value-name { font-size: 14.5px; color: var(--ink); font-weight: 500; }
+.value-desc { font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
+.value-market {
+  font-size: 13px;
+  color: var(--ink-3);
+  text-decoration: line-through;
+  text-align: right;
+  white-space: nowrap;
+}
+.value-yours {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: right;
+  white-space: nowrap;
+  min-width: 80px;
+}
+.value-total-row {
+  background: var(--ink);
+  color: var(--white);
+  padding: 22px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.value-total-lbl { font-size: 14px; font-weight: 600; letter-spacing: .3px; }
+.value-total-price {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--white);
+}
+.value-total-you { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 2px; text-align: right; }
+
+/* ── WHO ─────────────────────────────────────────────── */
+.section-who { padding: 120px 0; background: var(--sand); }
+.who-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 56px;
+}
+.who-col-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 24px;
+}
+.who-col-title.yes { color: var(--green, var(--accent)); }
+.who-col-title.no  { color: var(--ink-3); }
+.who-list { display: flex; flex-direction: column; gap: 14px; }
+.who-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  font-size: 14.5px; color: var(--ink-2); line-height: 1.5;
+}
+.who-check { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── TESTIMONIALS ────────────────────────────────────── */
+.section-testimonials { padding: 120px 0; background: var(--white); }
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px; }
+.testi-card {
+  background: var(--sand);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px 28px;
+}
+.testi-quote {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.testi-quote::before { content: '\201C'; }
+.testi-quote::after  { content: '\201D'; }
+.testi-author { font-size: 12px; font-weight: 600; color: var(--ink); letter-spacing: .3px; }
+.testi-role   { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+
+/* ── PRICING ─────────────────────────────────────────── */
+.section-pricing { padding: 120px 0; background: var(--sand); }
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 56px; }
+.plan {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 36px 32px;
+}
+.plan.featured {
+  background: var(--ink);
+  border-color: var(--ink);
+  position: relative;
+}
+.plan-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+.plan.featured .plan-tag { background: var(--accent); color: var(--white); }
+.plan:not(.featured) .plan-tag { background: var(--sand-2); color: var(--ink-3); }
+.plan-name {
+  font-family: var(--serif);
+  font-size: 22px; font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.plan.featured .plan-name { color: var(--white); }
+.plan-price {
+  font-family: var(--serif);
+  font-size: 44px; font-weight: 600;
+  letter-spacing: -.5px; line-height: 1;
+  color: var(--ink);
+  margin: 14px 0 4px;
+}
+.plan.featured .plan-price { color: var(--white); }
+.plan-per { font-size: 13px; color: var(--ink-3); }
+.plan.featured .plan-per { color: rgba(255,255,255,.5); }
+.plan-divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+.plan.featured .plan-divider { border-color: rgba(255,255,255,.15); }
+.plan-feats { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+.plan-feats li { font-size: 13.5px; color: var(--ink-2); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
+.plan.featured .plan-feats li { color: rgba(255,255,255,.75); }
+.plan-feats li .chk { flex-shrink: 0; margin-top: 1px; }
+.plan-feats li.dim .chk { opacity: .35; }
+.plan-feats li.dim { opacity: .5; }
+.plan-btn {
+  width: 100%; padding: 13px; text-align: center;
+  border-radius: 3px; font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: var(--sans);
+  border: 1px solid var(--border);
+  background: var(--sand); color: var(--ink);
+  transition: all .2s; letter-spacing: .2px;
+}
+.plan-btn:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.plan.featured .plan-btn {
+  background: var(--accent); color: var(--white); border-color: transparent;
+}
+.plan.featured .plan-btn:hover { background: #9A4A2A; }
+
+/* ── GUARANTEE ───────────────────────────────────────── */
+.section-guarantee { padding: 100px 0; background: var(--white); }
+.guarantee-box {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 56px 64px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.guarantee-seal {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; flex-shrink: 0;
+  padding: 12px;
+}
+.guarantee-seal-top    { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-3); }
+.guarantee-seal-num    { font-family: var(--serif); font-size: 34px; font-weight: 600; color: var(--ink); line-height: 1; }
+.guarantee-seal-bottom { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-3); }
+.guarantee-title { font-family: var(--serif); font-size: 26px; font-weight: 500; color: var(--ink); margin-bottom: 12px; }
+.guarantee-text  { font-size: 14.5px; color: var(--ink-2); line-height: 1.75; }
+
+/* ── FINAL CTA ───────────────────────────────────────── */
+.section-cta {
+  padding: 140px 0;
+  background: var(--ink);
+  text-align: center;
+}
+.cta-overline {
+  font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+  text-transform: uppercase; color: rgba(255,255,255,.35);
+  display: block; margin-bottom: 24px;
+}
+.cta-h {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 66px);
+  font-weight: 500; line-height: 1.1;
+  color: var(--white); margin-bottom: 20px;
+}
+.cta-h em { font-style: italic; color: var(--accent); opacity: .9; }
+.cta-sub {
+  font-size: 16px; color: rgba(255,255,255,.55);
+  line-height: 1.65; max-width: 480px;
+  margin: 0 auto 44px;
+}
+.btn-light {
+  background: var(--white);
+  color: var(--ink);
+  border: none;
+  border-radius: 3px;
+  padding: 16px 40px;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: var(--sans);
+  letter-spacing: .3px;
+  transition: background .2s, color .2s;
+  text-decoration: none; display: inline-block;
+}
+.btn-light:hover { background: var(--accent); color: var(--white); }
+.cta-note { margin-top: 18px; font-size: 12.5px; color: rgba(255,255,255,.3); }
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 40px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-logo { font-family: var(--serif); font-size: 18px; font-weight: 500; color: rgba(255,255,255,.5); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { font-size: 12.5px; color: rgba(255,255,255,.3); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: rgba(255,255,255,.7); }
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 860px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .container, .container-sm, .container-xs { padding: 0 24px; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .solution-lead { grid-template-columns: 1fr; gap: 40px; }
+  .who-grid { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .guarantee-box { grid-template-columns: 1fr; text-align: center; padding: 40px 28px; }
+  .guarantee-seal { margin: 0 auto; }
+  .value-row { grid-template-columns: 1fr auto; }
+  .value-row-head .value-market { display: none; }
+  .value-market { display: none; }
+  footer { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="#">Profilo<em>.</em></a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#guarantee">Guarantee</a>
+    <a href="#" class="nav-cta">Start free →</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════
+  HERO
+══════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container-xs">
+    <span class="hero-eyebrow">EU · NATO · International Institutions</span>
+    <h1>Your CV, finally<br><em>speaking their</em><br>language.</h1>
+    <p class="hero-sub">
+      EPSO, NATO, EEAS — every institution speaks a different legal dialect.
+      Profilo translates your experience into exactly what each evaluator is looking for.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-dark" href="#pricing">Start for free →</a>
+      <a class="btn-outline" href="#how">See how it works</a>
+    </div>
+    <p class="hero-note">No credit card · Cancel anytime · GDPR compliant</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  PROOF BAR
+══════════════════════════════════════════════════════ -->
+<div class="proof-bar">
+  <div class="proof-bar-inner">
+    <div class="proof-item">
+      <div class="proof-num">170K</div>
+      <div class="proof-lbl">candidates compete for each AD5 call</div>
+    </div>
+    <div class="proof-div"></div>
+    <div class="proof-item">
+      <div class="proof-num">&lt;3%</div>
+      <div class="proof-lbl">pass the first screening</div>
+    </div>
+    <div class="proof-div"></div>
+    <div class="proof-item">
+      <div class="proof-num">15h</div>
+      <div class="proof-lbl">saved per week on manual research</div>
+    </div>
+    <div class="proof-div"></div>
+    <div class="proof-item">
+      <div class="proof-num">9</div>
+      <div class="proof-lbl">sources monitored automatically</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  PROBLEM
+══════════════════════════════════════════════════════ -->
+<section class="section-problem" id="problem">
+  <div class="container-sm">
+    <span class="overline">The problem</span>
+    <h2 class="section-h">You are not rejected<br>because you are <em>unqualified</em>.</h2>
+    <p class="section-body">
+      EU institutions do not hire on talent or potential. They hire on regulatory compliance —
+      a precise, legalistic matching between your formal profile and the vacancy notice's requirements.
+      Most excellent candidates fail at the first filter. Not because they lack the skills.
+      Because their CV never spoke the language.
+    </p>
+  </div>
+
+  <div class="container" style="margin-top:64px">
+    <div class="problem-grid">
+      <div class="problem-cell">
+        <div class="problem-cell-num">01</div>
+        <div class="problem-cell-title">Zero visibility across sources</div>
+        <div class="problem-cell-text">EU Careers, NATO, EEAS, EDA, NSPA — each has its own portal, its own cadence, its own notice format. Staying on top of all of them manually takes hours every week.</div>
+      </div>
+      <div class="problem-cell">
+        <div class="problem-cell-num">02</div>
+        <div class="problem-cell-title">Eligibility buried in legalese</div>
+        <div class="problem-cell-text">Each notice contains formal requirements written in institutional language. Reading and cross-referencing them against your own profile is a specialist skill most candidates lack.</div>
+      </div>
+      <div class="problem-cell">
+        <div class="problem-cell-num">03</div>
+        <div class="problem-cell-title">Generic CVs fail the first filter</div>
+        <div class="problem-cell-text">LinkedIn-style CVs are written to impress humans. EU evaluators are not reading for impression — they are checking for compliance. The language must match the notice, word for word.</div>
+      </div>
+      <div class="problem-cell">
+        <div class="problem-cell-num">04</div>
+        <div class="problem-cell-title">No feedback, no iteration</div>
+        <div class="problem-cell-text">When you fail the screening, institutions tell you nothing. Without knowing which keywords were missing, which criteria were unmet, there is no way to improve for the next round.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  PULLQUOTE
+══════════════════════════════════════════════════════ -->
+<section class="section-quote">
+  <div class="container-sm">
+    <p class="quote-text">The most common reason for rejection at EPSO screening is not insufficient experience — it is insufficient alignment between the candidate's language and the notice's formal criteria.</p>
+    <p class="quote-attr">— Experienced EPSO Selection Board Member</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  SOLUTION
+══════════════════════════════════════════════════════ -->
+<section class="section-solution" id="how">
+  <div class="container">
+    <div class="solution-lead">
+      <div>
+        <span class="overline">How Profilo works</span>
+        <h2 class="section-h">Intelligence that works<br>while you sleep.</h2>
+        <p class="section-body" style="margin-top:16px">
+          Profilo is not a job board. It is a compliance engine.
+          It reads vacancy notices the way an institutional lawyer would —
+          then maps your experience to what the evaluator is specifically checking for.
+        </p>
+      </div>
+      <div class="solution-steps">
+        <div class="solution-step">
+          <div class="step-num">01</div>
+          <div>
+            <div class="step-title">Upload your CV once</div>
+            <div class="step-text">Profilo parses your profile — experience, education, languages, domain expertise — and builds a structural representation of your eligibility.</div>
+          </div>
+        </div>
+        <div class="solution-step">
+          <div class="step-num">02</div>
+          <div>
+            <div class="step-title">We monitor 9 sources daily</div>
+            <div class="step-text">EU Careers, NATO, EEAS, EDA, NSPA, EuroBrussels, EUISS, EUSPA, Frontex — every new notice is parsed and scored against your profile automatically.</div>
+          </div>
+        </div>
+        <div class="solution-step">
+          <div class="step-num">03</div>
+          <div>
+            <div class="step-title">See exactly where you stand</div>
+            <div class="step-text">Each match shows your compliance score, matched keywords, and — critically — the precise gaps you need to address before applying.</div>
+          </div>
+        </div>
+        <div class="solution-step">
+          <div class="step-num">04</div>
+          <div>
+            <div class="step-title">Apply with documents that convert</div>
+            <div class="step-text">Your writing partner generates cover letters in the exact institutional register the evaluator expects — not generic, not AI-sounding. Mapped to the notice.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  VALUE STACK
+══════════════════════════════════════════════════════ -->
+<section class="section-value">
+  <div class="container">
+    <span class="overline">What you're getting</span>
+    <h2 class="section-h">Everything you would<br>otherwise <em>pay for separately</em>.</h2>
+    <p class="section-body" style="margin-top:12px;max-width:560px">
+      A specialist EU career consultant charges €150–300/hour for exactly these services.
+      Profilo delivers them automatically, at every application.
+    </p>
+
+    <div class="value-table">
+      <div class="value-row value-row-head">
+        <div>What you get</div>
+        <div style="text-align:right">Market rate</div>
+        <div style="text-align:right">Yours</div>
+      </div>
+      <div class="value-row">
+        <div>
+          <div class="value-name">EU/NATO vacancy aggregation</div>
+          <div class="value-desc">9 sources, monitored daily, in one place</div>
+        </div>
+        <div class="value-market">€0 (your time)</div>
+        <div class="value-yours">Included</div>
+      </div>
+      <div class="value-row">
+        <div>
+          <div class="value-name">Compliance scoring engine</div>
+          <div class="value-desc">5-dimension match against formal eligibility criteria</div>
+        </div>
+        <div class="value-market">€150/hr consultant</div>
+        <div class="value-yours">Included</div>
+      </div>
+      <div class="value-row">
+        <div>
+          <div class="value-name">Keyword gap analysis</div>
+          <div class="value-desc">Exactly what's missing, for each specific notice</div>
+        </div>
+        <div class="value-market">€75 per application</div>
+        <div class="value-yours">Included</div>
+      </div>
+      <div class="value-row">
+        <div>
+          <div class="value-name">Institutional-language cover letters</div>
+          <div class="value-desc">Written in the register each evaluator expects</div>
+        </div>
+        <div class="value-market">€200 per letter</div>
+        <div class="value-yours">Unlimited</div>
+      </div>
+      <div class="value-row">
+        <div>
+          <div class="value-name">CV tailoring per vacancy</div>
+          <div class="value-desc">Specific reframing for each notice's language</div>
+        </div>
+        <div class="value-market">€120 per CV</div>
+        <div class="value-yours">Unlimited</div>
+      </div>
+      <div class="value-row">
+        <div>
+          <div class="value-name">Application tracker</div>
+          <div class="value-desc">Every stage, every deadline, in one view</div>
+        </div>
+        <div class="value-market">DIY spreadsheet</div>
+        <div class="value-yours">Included</div>
+      </div>
+      <div class="value-total-row">
+        <div>
+          <div class="value-total-lbl">Total value if purchased separately</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:4px">Conservative estimate, per active job search</div>
+        </div>
+        <div>
+          <div class="value-total-price">€1,200+</div>
+          <div class="value-total-you">You pay €19/month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  WHO IT'S FOR
+══════════════════════════════════════════════════════ -->
+<section class="section-who">
+  <div class="container">
+    <span class="overline">Who this is for</span>
+    <h2 class="section-h">Profilo is built for<br>a very specific person.</h2>
+    <div class="who-grid">
+      <div>
+        <div class="who-col-title yes">This is for you if —</div>
+        <div class="who-list">
+          <div class="who-item"><span class="who-check">→</span>You are targeting AD5–AD7 or equivalent NATO/IO grades</div>
+          <div class="who-item"><span class="who-check">→</span>You have relevant experience but struggle to communicate it in institutional language</div>
+          <div class="who-item"><span class="who-check">→</span>You are applying to multiple institutions and losing track of deadlines and requirements</div>
+          <div class="who-item"><span class="who-check">→</span>You have failed a first screening and do not know why</div>
+          <div class="who-item"><span class="who-check">→</span>You are a career coach or consultant with multiple EU-track clients</div>
+          <div class="who-item"><span class="who-check">→</span>You are transitioning from a national institution, military, or consultancy to an EU/IO career</div>
+        </div>
+      </div>
+      <div>
+        <div class="who-col-title no">This is not for you if —</div>
+        <div class="who-list">
+          <div class="who-item"><span class="who-check" style="color:var(--ink-3)">—</span>You are looking for private-sector or corporate jobs</div>
+          <div class="who-item"><span class="who-check" style="color:var(--ink-3)">—</span>You want a one-click application tool with no engagement</div>
+          <div class="who-item"><span class="who-check" style="color:var(--ink-3)">—</span>You are not willing to invest time in understanding the notices</div>
+          <div class="who-item"><span class="who-check" style="color:var(--ink-3)">—</span>You expect Profilo to replace the substantive preparation required for assessments</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  TESTIMONIALS
+══════════════════════════════════════════════════════ -->
+<section class="section-testimonials">
+  <div class="container">
+    <span class="overline">Early users</span>
+    <h2 class="section-h">What they said<br>after the first week.</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-quote">I applied for six positions over two years with no response. Within three weeks of using Profilo, I finally understood what the evaluators were actually looking for.</div>
+        <div class="testi-author">M.V.</div>
+        <div class="testi-role">Former national diplomat · Now at EEAS</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">The keyword gap analysis alone is worth the subscription. It showed me in 30 seconds what a €200 consultant told me in an hour.</div>
+        <div class="testi-author">K.L.</div>
+        <div class="testi-role">Policy Adviser · EU Careers applicant</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">I use Profilo for all my clients who are targeting Brussels positions. The institutional language of the cover letters is something I could not replicate manually at scale.</div>
+        <div class="testi-author">D.P.</div>
+        <div class="testi-role">EU Career Coach · Brussels</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  PRICING
+══════════════════════════════════════════════════════ -->
+<style>
+/* ── extra pricing styles ── */
+.trial-banner {
+  background: var(--ink);
+  color: var(--white);
+  text-align: center;
+  padding: 14px 24px;
+  font-size: 13px;
+  letter-spacing: .2px;
+  margin-bottom: 0;
+}
+.trial-banner strong { color: #F0C090; }
+
+.pricing-anchor {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.pricing-anchor-num {
+  font-family: var(--serif);
+  font-size: clamp(20px,3vw,28px);
+  color: var(--ink-2);
+  font-style: italic;
+  margin-bottom: 6px;
+}
+.pricing-anchor-num s { color: var(--ink-3); }
+.pricing-anchor-num strong {
+  color: var(--ink);
+  font-style: normal;
+  font-size: clamp(24px,3.5vw,34px);
+}
+
+/* value stack inside plan */
+.vstack {
+  background: var(--sand);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 14px 16px;
+  margin: 16px 0 20px;
+  font-size: 12px;
+}
+.plan.featured .vstack {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.12);
+}
+.vstack-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+}
+.plan.featured .vstack-row { border-color: rgba(255,255,255,.1); }
+.vstack-row:last-child { border-bottom: none; }
+.vstack-item { font-size: 12px; color: var(--ink-2); }
+.plan.featured .vstack-item { color: rgba(255,255,255,.65); }
+.vstack-val { font-size: 12px; color: var(--ink-3); white-space: nowrap; text-decoration: line-through; }
+.plan.featured .vstack-val { color: rgba(255,255,255,.3); }
+.vstack-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.plan.featured .vstack-total { border-color: rgba(255,255,255,.2); }
+.vstack-total-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--ink-3); }
+.plan.featured .vstack-total-lbl { color: rgba(255,255,255,.4); }
+.vstack-total-price { font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--ink-3); text-decoration: line-through; }
+.plan.featured .vstack-total-price { color: rgba(255,255,255,.35); }
+
+.plan-you-pay {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.plan-you-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-3); }
+.plan.featured .plan-you-label { color: rgba(255,255,255,.45); }
+
+/* bonus badges */
+.bonus-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.bonus-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; line-height: 1.4;
+}
+.bonus-icon {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+}
+.plan.featured .bonus-icon { background: rgba(255,255,255,.2); }
+.bonus-text { color: var(--ink-2); }
+.plan.featured .bonus-text { color: rgba(255,255,255,.75); }
+.bonus-text strong { color: var(--ink); }
+.plan.featured .bonus-text strong { color: var(--white); }
+
+.plan-limit {
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-top: 3px;
+  font-style: italic;
+}
+.plan.featured .plan-limit { color: rgba(255,255,255,.35); }
+</style>
+
+<section class="section-pricing" id="pricing">
+  <!-- trial strip -->
+  <div class="trial-banner">
+    All plans include a <strong>7-day free trial</strong>. No charge until day 8. Cancel anytime before.
+  </div>
+
+  <div class="container" style="padding-top:80px">
+    <span class="overline">Pricing</span>
+    <h2 class="section-h">One EU position pays<br>€40,000–80,000 per year.</h2>
+    <p class="section-body" style="margin-top:12px;max-width:480px">
+      The question is not whether Profilo is worth it.
+      The question is whether you can afford not to use it.
+    </p>
+
+    <!-- anchor: what a consultant charges -->
+    <div style="margin:48px 0;padding:28px 32px;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;background:var(--white)">
+      <div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--ink-3);margin-bottom:6px">What you'd pay a specialist instead</div>
+        <div style="font-family:var(--serif);font-size:clamp(18px,2.5vw,24px);color:var(--ink)">EU career consultant: <strong>€150–300 / hour</strong></div>
+        <div style="font-size:13px;color:var(--ink-3);margin-top:4px">CV review + cover letter + match analysis = €400–600 per application cycle</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:4px">Profilo Pro</div>
+        <div style="font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:600;color:var(--ink);line-height:1">€49<span style="font-size:18px;color:var(--ink-3)">/mo</span></div>
+        <div style="font-size:12px;color:var(--ink-3);margin-top:2px">Unlimited applications. Every month.</div>
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- ── STARTER €19 ── -->
+      <div class="plan">
+        <div class="plan-tag">7-day trial · then</div>
+        <div class="plan-name">Starter</div>
+        <div class="plan-you-pay">
+          <div class="plan-you-label">You pay</div>
+        </div>
+        <div class="plan-price">€19</div>
+        <div class="plan-per">/month · cancel anytime</div>
+        <hr class="plan-divider">
+
+        <div class="bonus-list">
+          <div class="bonus-item">
+            <div class="bonus-icon">✓</div>
+            <div class="bonus-text"><strong>10 matches per week</strong><br><span style="font-size:12px;color:var(--ink-3)">Across all 9 sources, scored daily</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon">✓</div>
+            <div class="bonus-text"><strong>Cover letters up to 400 words</strong><br><span style="font-size:12px;color:var(--ink-3)">3 per month · institutional language</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon">✓</div>
+            <div class="bonus-text"><strong>Keyword gap analysis</strong><br><span style="font-size:12px;color:var(--ink-3)">See exactly what's missing per vacancy</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon">✓</div>
+            <div class="bonus-text"><strong>Weekly email digest</strong></div>
+          </div>
+        </div>
+
+        <div class="plan-limit">Not included: full-length cover letters, CV tailoring, daily alerts, tracker.</div>
+        <hr class="plan-divider">
+        <button class="plan-btn" onclick="this.textContent='Starting trial…'">Start 7-day trial →</button>
+      </div>
+
+      <!-- ── PRO €49 (HERO) ── -->
+      <div class="plan featured">
+        <div class="plan-tag">Best value · 7-day trial</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-you-pay">
+          <div class="plan-you-label">You pay</div>
+        </div>
+        <div class="plan-price">€49</div>
+        <div class="plan-per">/month · cancel anytime</div>
+
+        <!-- value stack -->
+        <div class="vstack">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:8px">What you're actually getting</div>
+          <div class="vstack-row">
+            <span class="vstack-item">Unlimited match scoring</span>
+            <span class="vstack-val">€30/mo</span>
+          </div>
+          <div class="vstack-row">
+            <span class="vstack-item">Full cover letters, unlimited</span>
+            <span class="vstack-val">€450/mo</span>
+          </div>
+          <div class="vstack-row">
+            <span class="vstack-item">CV tailoring per vacancy</span>
+            <span class="vstack-val">€200/mo</span>
+          </div>
+          <div class="vstack-row">
+            <span class="vstack-item">Keyword gap analysis</span>
+            <span class="vstack-val">€80/mo</span>
+          </div>
+          <div class="vstack-row">
+            <span class="vstack-item">Daily alerts + deadline tracker</span>
+            <span class="vstack-val">€20/mo</span>
+          </div>
+          <div class="vstack-total">
+            <span class="vstack-total-lbl">Total value</span>
+            <span class="vstack-total-price">€780/mo</span>
+          </div>
+        </div>
+
+        <div class="bonus-list">
+          <div class="bonus-item">
+            <div class="bonus-icon">✓</div>
+            <div class="bonus-text"><strong>Unlimited matches, every day</strong><br><span style="font-size:12px;color:rgba(255,255,255,.5)">No weekly cap. Every new vacancy, scored.</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon">✓</div>
+            <div class="bonus-text"><strong>Full cover letters, no word limit</strong><br><span style="font-size:12px;color:rgba(255,255,255,.5)">Unlimited per month · full institutional register</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon">✓</div>
+            <div class="bonus-text"><strong>CV tailoring per vacancy</strong><br><span style="font-size:12px;color:rgba(255,255,255,.5)">Reframing suggestions for each notice's language</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon">✓</div>
+            <div class="bonus-text"><strong>Daily alerts + full deadline tracker</strong></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon">✓</div>
+            <div class="bonus-text"><strong>Application Kanban (unlimited)</strong></div>
+          </div>
+        </div>
+
+        <button class="plan-btn" onclick="this.textContent='Starting trial…'">Start 7-day trial — €49/mo →</button>
+        <div style="text-align:center;font-size:11.5px;color:rgba(255,255,255,.3);margin-top:10px">30-day money-back guarantee after trial</div>
+      </div>
+
+      <!-- ── EXPERT €97 ── -->
+      <div class="plan">
+        <div class="plan-tag">For coaches & power users</div>
+        <div class="plan-name">Expert</div>
+        <div class="plan-you-pay">
+          <div class="plan-you-label">You pay</div>
+        </div>
+        <div class="plan-price">€97</div>
+        <div class="plan-per">/month · cancel anytime</div>
+        <hr class="plan-divider">
+
+        <div style="font-size:12px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px">Everything in Pro, plus:</div>
+
+        <div class="bonus-list">
+          <div class="bonus-item">
+            <div class="bonus-icon" style="background:var(--ink);color:var(--white)">+</div>
+            <div class="bonus-text"><strong>5 team seats</strong><br><span style="font-size:12px;color:var(--ink-3)">Manage up to 4 clients or colleagues</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon" style="background:var(--ink);color:var(--white)">+</div>
+            <div class="bonus-text"><strong>Weekly compliance audit</strong><br><span style="font-size:12px;color:var(--ink-3)">AI report: where your profile stands vs. this week's market demand</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon" style="background:var(--ink);color:var(--white)">+</div>
+            <div class="bonus-text"><strong>1:1 onboarding call</strong><br><span style="font-size:12px;color:var(--ink-3)">30-min session to configure your profile for maximum match accuracy</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon" style="background:var(--ink);color:var(--white)">+</div>
+            <div class="bonus-text"><strong>B2B API access</strong><br><span style="font-size:12px;color:var(--ink-3)">For integrations and custom workflows</span></div>
+          </div>
+          <div class="bonus-item">
+            <div class="bonus-icon" style="background:var(--ink);color:var(--white)">+</div>
+            <div class="bonus-text"><strong>Priority support</strong><br><span style="font-size:12px;color:var(--ink-3)">Response within 24 hours</span></div>
+          </div>
+        </div>
+
+        <button class="plan-btn" onclick="this.textContent='Starting trial…'">Start 7-day trial →</button>
+      </div>
+
+    </div><!-- /pricing-grid -->
+
+    <!-- comparison note -->
+    <div style="margin-top:36px;text-align:center;font-size:13px;color:var(--ink-3)">
+      All prices exclude VAT where applicable · Stripe-secured payments · Cancel before day 8 to pay nothing
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  GUARANTEE
+══════════════════════════════════════════════════════ -->
+<section class="section-guarantee" id="guarantee">
+  <div class="container">
+    <div class="guarantee-box">
+      <div class="guarantee-seal">
+        <div class="guarantee-seal-top">Money back</div>
+        <div class="guarantee-seal-num">30</div>
+        <div class="guarantee-seal-bottom">Day guarantee</div>
+      </div>
+      <div>
+        <div class="guarantee-title">If it does not deliver, we refund. No questions.</div>
+        <div class="guarantee-text">
+          Try Profilo Pro for 30 days. If you do not find it meaningfully useful —
+          whether it is the match quality, the writing partner output, or anything else —
+          email us and we will refund your payment in full. We are not interested in keeping
+          money from people the product did not serve.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  FINAL CTA
+══════════════════════════════════════════════════════ -->
+<section class="section-cta">
+  <div class="container-xs">
+    <span class="cta-overline">You have everything to gain</span>
+    <h2 class="cta-h">The position exists.<br><em>Your application</em><br>needs to reach it.</h2>
+    <p class="cta-sub">
+      Start for free. Upload your CV. See your first matches in minutes.
+      No consultants, no spreadsheets, no guesswork.
+    </p>
+    <a class="btn-light" href="#pricing">Start for free →</a>
+    <p class="cta-note">No credit card · Cancel anytime · Your data stays yours</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+  FOOTER
+══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">Profilo.</div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">GDPR</a>
+    <a href="#">contact@profilo.app</a>
+  </div>
+</footer>
+
+</body>
+</html>
