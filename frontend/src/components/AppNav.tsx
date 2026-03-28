@@ -111,7 +111,7 @@ export function AppNav() {
         Hire<span>Scope</span>
       </Link>
       <ul className="nav-app-links">
-        {process.env.NEXT_PUBLIC_HIRESCOPE_DEV === "1" && (
+        {process.env.NEXT_PUBLIC_PROFILO_DEV === "1" && (
           <li>
             <Link href="/dev" className="text-amber-400/90">
               Dev

@@ -5,6 +5,7 @@ from backend.api.routes import (
     analytics,
     applications,
     auth,
+    billing,
     candidates,
     cv,
     dev,
@@ -16,7 +17,7 @@ from backend.api.routes import (
 )
 
 app = FastAPI(
-    title="HireScope API",
+    title="Profilo API",
     description="AI-Powered Job Matching Platform for EU/International Careers",
     version="1.0.0",
 )
@@ -34,7 +35,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         *_LOCAL_ORIGINS,
-        "https://hirescope.app",
+        "https://profilo.app",
     ],
     allow_origin_regex=r"^http://(localhost|127\.0\.0\.1):\d+$",
     allow_credentials=True,
@@ -54,9 +55,10 @@ for api_prefix in ("/api", "/api/v1"):
     app.include_router(candidates.router, prefix=f"{api_prefix}/candidates", tags=["Candidates"])
     app.include_router(settings.router, prefix=f"{api_prefix}/settings", tags=["Settings"])
     app.include_router(humanizer.router, prefix=f"{api_prefix}/generate", tags=["Generation"])
+    app.include_router(billing.router, prefix=f"{api_prefix}/billing", tags=["Billing"])
 
 
 @app.get("/api/health")
 @app.get("/api/v1/health")
 async def health_check():
-    return {"status": "ok", "service": "hirescope-api"}
+    return {"status": "ok", "service": "profilo-api"}

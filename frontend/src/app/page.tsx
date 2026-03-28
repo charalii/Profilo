@@ -8,13 +8,13 @@ const features = [
   {
     icon: "🗂️",
     title: "Every Vacancy. One Dashboard.",
-    desc: "Stop checking EPSO on Monday, NATO on Tuesday, and EuroBrussels on Wednesday. HireScope scrapes 15+ sources continuously and delivers every relevant opening ranked by how well it matches your profile.",
+    desc: "Stop checking EPSO on Monday, NATO on Tuesday, and EuroBrussels on Wednesday. Profilo scrapes 15+ sources continuously and delivers every relevant opening ranked by how well it matches your profile.",
     pill: "Updated daily from source",
   },
   {
     icon: "✍️",
     title: "Cover Letters That Don't Sound Like Templates",
-    desc: "HireScope generates cover letters that map your specific experience to each vacancy's requirements — using the right tone, the right structure, and the institutional language EU recruiters expect.",
+    desc: "Profilo generates cover letters that map your specific experience to each vacancy's requirements — using the right tone, the right structure, and the institutional language EU recruiters expect.",
     pill: "One click per vacancy",
   },
   {
@@ -32,7 +32,7 @@ const features = [
   {
     icon: "🔔",
     title: "Never Miss a Perfect Match",
-    desc: "Every week, HireScope scans new vacancies against your profile and sends you a digest of roles scoring 80% or higher. Pro users get daily alerts with custom filters. Stop searching. Start receiving.",
+    desc: "Every week, Profilo scans new vacancies against your profile and sends you a digest of roles scoring 80% or higher. Pro users get daily alerts with custom filters. Stop searching. Start receiving.",
     pill: "Smart profile-matched alerts",
   },
 ];
@@ -47,7 +47,7 @@ const stats = [
 const testimonials = [
   {
     quote:
-      "I was spending 10+ hours a week just finding and reviewing vacancies across different portals. HireScope cut that to 15 minutes. The match scores are genuinely accurate — it flagged a NATO role I would have completely missed.",
+      "I was spending 10+ hours a week just finding and reviewing vacancies across different portals. Profilo cut that to 15 minutes. The match scores are genuinely accurate — it flagged a NATO role I would have completely missed.",
     author: "Policy Advisor, Brussels",
     role: "Beta user",
   },
@@ -59,7 +59,7 @@ const testimonials = [
   },
   {
     quote:
-      "As a career coach specializing in EU careers, I've recommended HireScope to every single one of my clients. Nothing else comes close for this niche.",
+      "As a career coach specializing in EU careers, I've recommended Profilo to every single one of my clients. Nothing else comes close for this niche.",
     author: "EU Career Coach",
     role: "College of Europe alumni network · Beta user",
   },
@@ -67,7 +67,7 @@ const testimonials = [
 
 const faqs = [
   {
-    q: "How does HireScope find vacancies?",
+    q: "How does Profilo find vacancies?",
     a: "We scrape 15+ official vacancy portals including EPSO, EEAS, EDA, NATO, NSPA, EuroBrussels, and major EU think tanks and agencies. Our scrapers run daily so you're always seeing the latest openings. We don't rely on job boards reposting listings — we go directly to the source.",
   },
   {
@@ -83,16 +83,16 @@ const faqs = [
     a: "PDF. Upload any standard PDF CV and our parser handles the rest — extracting skills, qualifications, languages, work history, and domain expertise automatically.",
   },
   {
-    q: "Can I use HireScope if I'm outside the EU?",
-    a: "Yes. HireScope works for anyone applying to EU institutions and international organizations, regardless of where you're based. Many of the roles we track are open to non-EU nationals, and our matching engine accounts for nationality requirements where applicable.",
+    q: "Can I use Profilo if I'm outside the EU?",
+    a: "Yes. Profilo works for anyone applying to EU institutions and international organizations, regardless of where you're based. Many of the roles we track are open to non-EU nationals, and our matching engine accounts for nationality requirements where applicable.",
   },
   {
     q: "What's included in the free plan?",
-    a: "Three match reports per week, access to our EPSO and EuroBrussels vacancy feeds, and a basic application tracker (10 slots). It's enough to see if HireScope works for you — and most users upgrade within the first week.",
+    a: "Three match reports per week, access to our EPSO and EuroBrussels vacancy feeds, and a basic application tracker (10 slots). It's enough to see if Profilo works for you — and most users upgrade within the first week.",
   },
   {
     q: "How is this different from LinkedIn or Jobscan?",
-    a: "LinkedIn's AI is built for mass-market corporate hiring — it doesn't understand EPSO, CAST, SNE postings, or EU competency frameworks. Jobscan optimizes your resume for ATS systems that EU institutions don't use. HireScope is the only platform that combines EU-specific vacancy aggregation with AI matching purpose-built for how these organizations actually hire.",
+    a: "LinkedIn's AI is built for mass-market corporate hiring — it doesn't understand EPSO, CAST, SNE postings, or EU competency frameworks. Jobscan optimizes your resume for ATS systems that EU institutions don't use. Profilo is the only platform that combines EU-specific vacancy aggregation with AI matching purpose-built for how these organizations actually hire.",
   },
   {
     q: "Can I cancel anytime?",
@@ -111,7 +111,7 @@ export default function Home() {
           <em>Start Matching.</em>
         </h1>
         <p>
-          HireScope&apos;s AI reads your CV, scrapes 15+ EU and international vacancy
+          Profilo&apos;s AI reads your CV, scrapes 15+ EU and international vacancy
           portals in real time, and tells you exactly which roles want someone like
           you — with a match score, a tailored cover letter, and a plan to get hired.
         </p>
@@ -233,7 +233,7 @@ export default function Home() {
         <p>
           Upload your CV. See your matches in 30 seconds. Get your first tailored
           cover letter. The roles you&apos;ve been searching for are already waiting —
-          HireScope just connects the dots.
+          Profilo just connects the dots.
         </p>
         <a href="/signup" className="btn-primary">
           Get Started Free — Upload Your CV

@@ -42,7 +42,7 @@ export default function DevToolsPage() {
       const data = await api.devToken(role);
       localStorage.setItem("token", data.access_token);
       pushLog(`Logged in as ${role} (token stored).`);
-      window.dispatchEvent(new CustomEvent("hirescope-auth"));
+      window.dispatchEvent(new CustomEvent("profilo-auth"));
       window.location.reload();
     } catch (e) {
       pushLog(`Login failed: ${e instanceof Error ? e.message : "error"}`);
@@ -72,7 +72,7 @@ export default function DevToolsPage() {
         <p className="mt-2 text-slate-400">
           Start the API with{" "}
           <code className="rounded bg-slate-800 px-1 text-cyan-300">
-            HIRESCOPE_DEV=1
+            PROFILO_DEV=1
           </code>{" "}
           (see docker-compose or your shell).
         </p>
@@ -88,7 +88,7 @@ export default function DevToolsPage() {
       <h1 className="text-2xl font-bold text-white">Development / API</h1>
       <p className="mt-2 text-slate-400">
         Demo login, manual scrapes, and links to live data. Requires{" "}
-        <code className="text-cyan-300">HIRESCOPE_DEV=1</code> on the backend.
+        <code className="text-cyan-300">PROFILO_DEV=1</code> on the backend.
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">

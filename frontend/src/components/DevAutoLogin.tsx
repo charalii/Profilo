@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * When NEXT_PUBLIC_HIRESCOPE_DEV=1, requests a demo JWT once (no login form).
+ * When NEXT_PUBLIC_PROFILO_DEV=1, requests a demo JWT once (no login form).
  * Set NEXT_PUBLIC_DEV_ROLE=recruiter to default as recruiter.
  */
 export function DevAutoLogin() {
@@ -11,7 +11,7 @@ export function DevAutoLogin() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (process.env.NEXT_PUBLIC_HIRESCOPE_DEV !== "1") return;
+    if (process.env.NEXT_PUBLIC_PROFILO_DEV !== "1") return;
     if (ran.current) return;
     if (localStorage.getItem("token")) return;
 
@@ -32,7 +32,7 @@ export function DevAutoLogin() {
       .then((data) => {
         if (data?.access_token) {
           localStorage.setItem("token", data.access_token);
-          window.dispatchEvent(new CustomEvent("hirescope-auth"));
+          window.dispatchEvent(new CustomEvent("profilo-auth"));
           window.location.reload();
         }
       })

@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: hirescope
+      POSTGRES_DB: profilo
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -20,12 +20,12 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/hirescope
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/profilo
       REDIS_URL: redis://redis:6379/0
       SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       # Demo JWT + /api/dev/* scrape helpers (never enable in production)
-      HIRESCOPE_DEV: ${HIRESCOPE_DEV:-0}
+      PROFILO_DEV: ${PROFILO_DEV:-0}
     depends_on:
       - db
       - redis
@@ -34,7 +34,7 @@ services:
     build: ./backend
     command: celery -A backend.tasks.celery_app worker --loglevel=info
     environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/hirescope
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/profilo
       REDIS_URL: redis://redis:6379/0
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
     depends_on:
@@ -55,7 +55,7 @@ services:
       - "3000:3000"
     environment:
       NEXT_PUBLIC_API_URL: http://backend:8000
-      NEXT_PUBLIC_HIRESCOPE_DEV: ${NEXT_PUBLIC_HIRESCOPE_DEV:-0}
+      NEXT_PUBLIC_PROFILO_DEV: ${NEXT_PUBLIC_PROFILO_DEV:-0}
     depends_on:
       - backend
 

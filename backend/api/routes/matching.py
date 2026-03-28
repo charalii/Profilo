@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -10,12 +12,48 @@ from backend.services.matching import ProfileFeatures, compute_match
 
 router = APIRouter()
 
+FREE_TIER_WEEKLY_LIMIT = 3
+
+
+async def _check_free_tier(user: User, db: AsyncSession) -> None:
+    """Raise 402 if free user has already seen 3 matches this week."""
+    if user.plan != "free":
+        return
+
+    now = datetime.utcnow()
+    week_start = (now - timedelta(days=now.weekday())).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
+
+    result = await db.execute(
+        select(func.count()).where(
+            Match.user_id == user.id,
+            Match.created_at >= week_start,
+        )
+    )
+    weekly_used = result.scalar() or 0
+
+    if weekly_used >= FREE_TIER_WEEKLY_LIMIT:
+        raise HTTPException(
+            status_code=402,
+            detail={
+                "error": "free_tier_limit_reached",
+                "message": f"Free plan includes {FREE_TIER_WEEKLY_LIMIT} matches per week. "
+                           "Upgrade to Pro for unlimited matches.",
+                "weekly_used": weekly_used,
+                "limit": FREE_TIER_WEEKLY_LIMIT,
+                "upgrade_url": "/pricing",
+            },
+        )
+
 
 @router.post("/compute", status_code=200)
 async def compute_matches(
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    await _check_free_tier(user, db)
+
     result = await db.execute(
         select(CVProfile).where(CVProfile.user_id == user.id).order_by(CVProfile.created_at.desc())
     )

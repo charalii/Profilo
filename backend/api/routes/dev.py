@@ -1,5 +1,5 @@
 """
-Development-only helpers: demo JWT, manual scrapes. Disabled unless HIRESCOPE_DEV=1.
+Development-only helpers: demo JWT, manual scrapes. Disabled unless PROFILO_DEV=1.
 """
 
 import os
@@ -16,20 +16,20 @@ from backend.api.schemas import TokenResponse
 from backend.scrapers.registry import SCRAPERS
 from backend.tasks.scrape_tasks import SCRAPER_CLASSES, _run_scraper
 
-HIRESCOPE_DEV = os.getenv("HIRESCOPE_DEV", "").lower() in ("1", "true", "yes")
+PROFILO_DEV = os.getenv("PROFILO_DEV", "").lower() in ("1", "true", "yes")
 
 router = APIRouter()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 DEV_EMAIL = {
-    "candidate": "dev+candidate@hirescope.local",
-    "recruiter": "dev+recruiter@hirescope.local",
+    "candidate": "dev+candidate@profilo.local",
+    "recruiter": "dev+recruiter@profilo.local",
 }
 
 
 def _require_dev() -> None:
-    if not HIRESCOPE_DEV:
+    if not PROFILO_DEV:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
 
 
@@ -41,8 +41,8 @@ class DevTokenRequest(BaseModel):
 async def dev_status():
     _require_dev()
     return {
-        "hirescope_dev": True,
-        "message": "Dev endpoints enabled. Do not enable HIRESCOPE_DEV in production.",
+        "profilo_dev": True,
+        "message": "Dev endpoints enabled. Do not enable PROFILO_DEV in production.",
     }
 
 

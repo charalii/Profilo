@@ -15,7 +15,7 @@ SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
-FROM_EMAIL = os.getenv("FROM_EMAIL", "alerts@hirescope.app")
+FROM_EMAIL = os.getenv("FROM_EMAIL", "alerts@profilo.app")
 
 
 async def send_application_status_email(
@@ -32,7 +32,7 @@ async def send_application_status_email(
         return
 
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = f"HireScope: Application update — {job_title}"
+    msg["Subject"] = f"Profilo: Application update — {job_title}"
     msg["From"] = FROM_EMAIL
     msg["To"] = user_email
 
@@ -40,7 +40,7 @@ async def send_application_status_email(
         f"Hi {user_name or 'there'},\n\n"
         f"Your application status for {job_title} at {organization} changed "
         f"from {old_status} to {new_status}.\n\n"
-        "Log in to HireScope to view details.\n"
+        "Log in to Profilo to view details.\n"
     )
     html_content = f"""
     <html>
@@ -49,7 +49,7 @@ async def send_application_status_email(
         <p>Hi {user_name or 'there'},</p>
         <p>Your application for <strong>{job_title}</strong> at {organization} is now
         <strong>{new_status}</strong> (was {old_status}).</p>
-        <p><a href="https://hirescope.app/tracker" style="color: #1a56db;">Open tracker</a></p>
+        <p><a href="https://profilo.app/tracker" style="color: #1a56db;">Open tracker</a></p>
     </body></html>
     """
 
@@ -95,7 +95,7 @@ async def send_alert_email(user_email: str, user_name: str, matches: list[dict])
         return
 
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = f"HireScope: {len(matches)} new job matches for you"
+    msg["Subject"] = f"Profilo: {len(matches)} new job matches for you"
     msg["From"] = FROM_EMAIL
     msg["To"] = user_email
 
@@ -104,12 +104,12 @@ async def send_alert_email(user_email: str, user_name: str, matches: list[dict])
     for m in matches[:10]:
         text_content += f"- {m['title']} at {m['organization']} (Score: {m['score']}%)\n"
         text_content += f"  {m['url']}\n\n"
-    text_content += "Log in to HireScope to see full details and generate cover letters.\n"
+    text_content += "Log in to Profilo to see full details and generate cover letters.\n"
 
     html_content = f"""
     <html>
     <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1a56db;">HireScope Match Alert</h2>
+        <h2 style="color: #1a56db;">Profilo Match Alert</h2>
         <p>Hi {user_name or 'there'},</p>
         <p>We found <strong>{len(matches)}</strong> new matches for your profile:</p>
     """
@@ -125,7 +125,7 @@ async def send_alert_email(user_email: str, user_name: str, matches: list[dict])
         </div>
         """
     html_content += """
-        <p><a href="https://hirescope.app/dashboard" style="background: #1a56db; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none;">Go to Dashboard</a></p>
+        <p><a href="https://profilo.app/dashboard" style="background: #1a56db; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none;">Go to Dashboard</a></p>
     </body></html>
     """
 

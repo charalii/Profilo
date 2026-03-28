@@ -25,7 +25,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md rounded-xl border border-slate-700 bg-slate-900/80 p-8 shadow-xl backdrop-blur">
         <h1 className="text-2xl font-bold text-white">Sign In</h1>
         <p className="mt-2 text-sm text-slate-400">
-          Welcome back to HireScope.
+          Welcome back to Profilo.
         </p>
 
         {error && (

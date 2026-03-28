@@ -228,7 +228,7 @@ export const api = {
     return request<CandidateSearchResponse>(`/api/candidates/search${suffix}`);
   },
 
-  /** Only when API has HIRESCOPE_DEV=1 */
+  /** Only when API has PROFILO_DEV=1 */
   devToken(role: "candidate" | "recruiter") {
     return request<TokenResponse>("/api/dev/token", {
       method: "POST",
