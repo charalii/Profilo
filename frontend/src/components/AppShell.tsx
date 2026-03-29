@@ -9,6 +9,11 @@ import { MarketingNav } from "@/components/MarketingNav";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const marketing = pathname === "/" || pathname === "/pricing";
+  const fullPage = pathname === "/demo";
+
+  if (fullPage) {
+    return <>{children}</>;
+  }
 
   if (marketing) {
     return (

@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profilo — EU Career Intelligence</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #F8F6F2;
+  --surface:    #FFFFFF;
+  --border:     #E6E2DC;
+  --border-lt:  #EEEBE6;
+  --text:       #1C1916;
+  --text-2:     #6A6560;
+  --text-3:     #AAA5A0;
+  --accent:     #1D4ED8;
+  --accent-lt:  #EFF6FF;
+  --green:      #2A7A50;
+  --green-lt:   #EBF6F0;
+  --amber:      #9E5E0A;
+  --amber-lt:   #FDF3E2;
+  --red:        #B63C3C;
+  --red-lt:     #FBEAEA;
+  --purple:     #6040A0;
+  --purple-lt:  #F0ECF8;
+  --r:          10px;
+  --r-lg:       14px;
+  --sh:         0 1px 3px rgba(0,0,0,.05), 0 1px 2px rgba(0,0,0,.04);
+  --sh-md:      0 4px 16px rgba(0,0,0,.08);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── LAYOUT ── */
+.app { display: flex; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 50;
+  padding: 0;
+}
+.sidebar-logo {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border-lt);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -.4px;
+  color: var(--text);
+}
+.sidebar-logo em { color: var(--accent); font-style: normal; }
+
+.sidebar-nav {
+  padding: 12px 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-2);
+  transition: all .15s;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+.nav-item:hover { background: var(--border-lt); color: var(--text); }
+.nav-item.active { background: var(--accent-lt); color: var(--accent); font-weight: 600; }
+.nav-item .icon { font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
+
+.sidebar-bottom {
+  padding: 14px 10px;
+  border-top: 1px solid var(--border-lt);
+}
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+.avatar {
+  width: 30px; height: 30px;
+  background: var(--accent-lt);
+  border-radius: 99px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: var(--accent);
+  flex-shrink: 0;
+}
+.user-name { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.2; }
+.user-plan { font-size: 11.5px; color: var(--text-3); }
+
+.upgrade-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 9px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity .15s;
+}
+.upgrade-btn:hover { opacity: .88; }
+
+/* ── MAIN ── */
+.main {
+  margin-left: 220px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.topbar-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.topbar-actions { display: flex; gap: 8px; align-items: center; }
+
+/* ── PAGES ── */
+.page { display: none; padding: 28px; max-width: 1000px; }
+.page.active { display: block; }
+
+/* ── TYPOGRAPHY ── */
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 14px;
+  font-family: inherit;
+  transition: all .15s;
+  background: var(--surface);
+  color: var(--text-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { background: var(--border-lt); color: var(--text); }
+.btn-primary { background: var(--accent); color: #fff; border-color: transparent; }
+.btn-primary:hover { opacity: .9; }
+.btn-sm { padding: 5px 11px; font-size: 12px; }
+.btn-xs { padding: 3px 9px; font-size: 11.5px; }
+.btn-ghost { background: none; border-color: transparent; color: var(--text-2); }
+.btn-ghost:hover { background: var(--border-lt); }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh);
+}
+.card-body { padding: 20px; }
+
+/* ── STATS ── */
+.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  box-shadow: var(--sh);
+}
+.stat-num { font-size: 30px; font-weight: 800; color: var(--text); letter-spacing: -.5px; line-height: 1; }
+.stat-lbl { font-size: 12.5px; color: var(--text-2); margin-top: 4px; }
+.stat-badge {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+.badge-green { background: var(--green-lt); color: var(--green); }
+.badge-amber { background: var(--amber-lt); color: var(--amber); }
+.badge-red   { background: var(--red-lt);   color: var(--red); }
+
+/* ── FREE BAR ── */
+.free-bar {
+  background: var(--amber-lt);
+  border: 1px solid #EDD8B0;
+  border-radius: var(--r);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--amber);
+}
+.progress-track { flex:1; height:4px; background:#EDD8B0; border-radius:99px; max-width:120px; overflow:hidden; }
+.progress-fill  { height:100%; background:var(--amber); border-radius:99px; }
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+
+/* ── TAGS / CHIPS ── */
+.tag {
+  display: inline-flex; align-items: center;
+  font-size: 11.5px; font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 5px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.tag-eu      { background: var(--accent-lt); color: var(--accent); border-color: #BFDBFE; }
+.tag-nato    { background: var(--purple-lt); color: var(--purple); border-color: #CCBEEA; }
+.tag-grey    { background: var(--bg); color: var(--text-2); border-color: var(--border); }
+.tag-date    { background: var(--amber-lt); color: var(--amber); border-color: #EDD8B0; }
+.tag-miss    { background: var(--red-lt); color: var(--red); border-color: #ECC8C8; }
+.tag-green   { background: var(--green-lt); color: var(--green); border-color: #A8D8C0; }
+
+.chip {
+  display: inline-flex; align-items: center;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 3px 8px;
+  font-size: 12px; color: var(--text-2); font-weight: 500;
+  margin: 2px;
+}
+
+/* ── MATCH CARD ── */
+.match-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+  box-shadow: var(--sh);
+}
+.match-card:hover { border-color: #C8C0B8; box-shadow: var(--sh-md); }
+
+.score-ring {
+  width: 50px; height: 50px;
+  border-radius: 99px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800;
+  flex-shrink: 0;
+  border: 2.5px solid;
+}
+.sh { border-color:#86CCAB; color:var(--green); background:var(--green-lt); }
+.sm { border-color:#E5C07B; color:var(--amber); background:var(--amber-lt); }
+.sl { border-color:#E5A0A0; color:var(--red);   background:var(--red-lt); }
+
+.match-body { flex:1; min-width:0; }
+.match-title { font-size:14px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.match-org   { font-size:12.5px; color:var(--text-2); margin-top:1px; }
+.match-tags  { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+.match-actions { display:flex; gap:7px; align-items:center; flex-shrink:0; }
+
+/* ── FILTER BAR ── */
+.filter-bar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+.input, .select {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  outline: none;
+}
+.input:focus, .select:focus { border-color: #C0B8B0; }
+.input { flex:1; min-width:180px; }
+
+/* ── KANBAN ── */
+.kanban-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+.kanban { display: flex; gap: 10px; width: max-content; min-width: 100%; }
+.k-col {
+  width: 172px; flex-shrink: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 12px;
+  min-height: 300px;
+}
+.k-col-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.k-col-name { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--text-2); }
+.k-col-count { background:var(--border); color:var(--text-3); font-size:11px; font-weight:600; padding:1px 7px; border-radius:99px; }
+.k-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 11px;
+  margin-bottom: 6px;
+  cursor: grab;
+  box-shadow: var(--sh);
+  transition: box-shadow .15s, border-color .15s;
+}
+.k-item:hover { box-shadow:var(--sh-md); border-color:#C0B8B0; }
+.k-item:active { cursor:grabbing; }
+.k-item-title { font-size:12px; font-weight:700; color:var(--text); line-height:1.3; margin-bottom:3px; }
+.k-item-org   { font-size:11px; color:var(--text-3); }
+.k-item-tag   { display:inline-block; margin-top:5px; }
+.k-drop { border:2px dashed var(--border); border-radius:8px; height:44px; display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--text-3); }
+
+/* ── WRITER ── */
+.doc-toggle { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:3px; gap:3px; }
+.doc-btn {
+  flex:1; border:none; background:none; border-radius:6px;
+  padding:7px; font-size:13px; font-weight:500; color:var(--text-2);
+  cursor:pointer; font-family:inherit; transition:all .15s;
+}
+.doc-btn.on { background:var(--surface); color:var(--text); font-weight:700; box-shadow:var(--sh); }
+
+.writer-out {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--text);
+  white-space: pre-wrap;
+  min-height: 300px;
+  max-height: 420px;
+  overflow-y: auto;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+.writer-placeholder { color:var(--text-3); font-family:inherit; font-style:italic; font-size:13px; }
+
+/* ── VACANCY DETAIL SIDEBAR ── */
+.vac-sidebar {
+  width: 340px;
+  border-left: 1px solid var(--border);
+  background: var(--surface);
+  position: fixed;
+  top: 0; right: -360px; bottom: 0;
+  z-index: 80;
+  transition: right .25s cubic-bezier(.4,0,.2,1);
+  display: flex; flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0,0,0,.08);
+}
+.vac-sidebar.open { right: 0; }
+.vac-sidebar-head {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+}
+.vac-sidebar-body { flex:1; overflow-y:auto; padding:20px; }
+.vac-sidebar-foot {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 8px;
+}
+.dim {
+  position: fixed; inset: 0;
+  background: rgba(20,18,16,.25);
+  z-index: 70;
+  display: none;
+  backdrop-filter: blur(2px);
+}
+.dim.open { display: block; }
+
+/* ── PRICING ── */
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:820px; }
+.plan {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  box-shadow: var(--sh);
+}
+.plan.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--sh-md); }
+.plan-tag { display:inline-block; background:var(--accent-lt); color:var(--accent); font-size:11px; font-weight:700; padding:3px 9px; border-radius:99px; margin-bottom:12px; letter-spacing:.2px; }
+.plan-name { font-size:17px; font-weight:800; color:var(--text); }
+.plan-price { font-size:34px; font-weight:800; color:var(--text); margin:8px 0 2px; letter-spacing:-.5px; }
+.plan-per { font-size:12.5px; color:var(--text-3); }
+.plan-div { border:none; border-top:1px solid var(--border-lt); margin:18px 0; }
+.plan-feats { list-style:none; display:flex; flex-direction:column; gap:9px; margin-bottom:20px; }
+.plan-feats li { font-size:13px; color:var(--text-2); display:flex; align-items:flex-start; gap:8px; }
+.plan-feats li::before { content:"✓"; color:var(--green); font-weight:700; flex-shrink:0; margin-top:1px; }
+.plan-feats li.no { color:var(--text-3); }
+.plan-feats li.no::before { content:"–"; color:var(--text-3); }
+.plan-btn {
+  width:100%; padding:10px; border-radius:9px;
+  font-size:14px; font-weight:700;
+  border:1px solid var(--border);
+  cursor:pointer; font-family:inherit;
+  transition:all .15s;
+  background:var(--surface); color:var(--text-2);
+}
+.plan-btn.on { background:var(--accent); color:#fff; border-color:transparent; }
+.plan-btn.on:hover { opacity:.88; }
+.plan-btn:not(.on):hover { background:var(--border-lt); }
+
+/* ── MODAL ── */
+.modal-wrap {
+  position:fixed; inset:0;
+  background:rgba(20,18,16,.4);
+  backdrop-filter:blur(4px);
+  z-index:200;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .2s;
+}
+.modal-wrap.open { opacity:1; pointer-events:all; }
+.modal {
+  background:var(--surface);
+  border-radius:16px; padding:28px;
+  max-width:500px; width:92%; max-height:80vh; overflow-y:auto;
+  box-shadow:0 24px 64px rgba(0,0,0,.18);
+  transform:translateY(14px); transition:transform .2s;
+}
+.modal-wrap.open .modal { transform:translateY(0); }
+
+/* ── TOAST ── */
+.toast {
+  position:fixed; bottom:24px; left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--text); color:#fff;
+  padding:10px 18px; border-radius:9px;
+  font-size:13px; font-weight:500;
+  z-index:400; opacity:0;
+  transition:all .25s; pointer-events:none; white-space:nowrap;
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ── SETTINGS ── */
+.settings-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 0; border-bottom:1px solid var(--border-lt);
+}
+.settings-row:last-child { border:none; }
+.toggle {
+  width:40px; height:22px; background:var(--border);
+  border-radius:99px; position:relative; cursor:pointer; transition:background .2s; border:none;
+}
+.toggle.on { background:var(--accent); }
+.toggle::after {
+  content:''; position:absolute;
+  width:16px; height:16px; background:#fff;
+  border-radius:99px; top:3px; left:3px; transition:left .2s;
+}
+.toggle.on::after { left:21px; }
+
+@media (max-width:700px) {
+  .sidebar { display:none; }
+  .main { margin-left:0; }
+  .stats { grid-template-columns:1fr; }
+  .grid-2 { grid-template-columns:1fr; }
+  .pricing-grid { grid-template-columns:1fr; }
+  .match-actions { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">Profilo<em>.</em></div>
+  <nav class="sidebar-nav">
+    <button class="nav-item active" onclick="go('dashboard',this)">
+      <span class="icon">◫</span> Dashboard
+    </button>
+    <button class="nav-item" onclick="go('matches',this)">
+      <span class="icon">◎</span> Matches
+    </button>
+    <button class="nav-item" onclick="go('tracker',this)">
+      <span class="icon">⊟</span> Tracker
+    </button>
+    <button class="nav-item" onclick="go('write',this)">
+      <span class="icon">✦</span> Prepare
+    </button>
+    <div style="margin:10px 0 4px 12px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-3)">Account</div>
+    <button class="nav-item" onclick="go('pricing',this)">
+      <span class="icon">◈</span> Pricing
+    </button>
+    <button class="nav-item" onclick="go('settings',this)">
+      <span class="icon">⊙</span> Settings
+    </button>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="user-row">
+      <div class="avatar">C</div>
+      <div>
+        <div class="user-name">Charalampos</div>
+        <div class="user-plan" id="plan-label">Trial available · 10/10 matches</div>
+      </div>
+    </div>
+    <button class="upgrade-btn" onclick="go('pricing', document.querySelector('[onclick*=pricing]'))">Start free trial →</button>
+  </div>
+</aside>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-title" id="topbar-title">Dashboard</div>
+  <div class="topbar-actions">
+    <button class="btn btn-sm" onclick="toast('Scrapers running — check back in 2 min.')">↻ Refresh data</button>
+  </div>
+</div>
+
+<!-- ══════════════════ DASHBOARD ══════════════════ -->
+<div class="page active" id="page-dashboard">
+
+  <div class="free-bar">
+    ⚡ <strong style="margin:0 3px">10 of 10</strong> weekly matches used — unlock unlimited with Pro
+    <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+    <button class="btn btn-xs btn-primary" onclick="go('pricing',document.querySelector('[onclick*=pricing]'))">Try free 7 days →</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">847</div>
+      <div class="stat-lbl">Active vacancies tracked</div>
+      <span class="stat-badge badge-green">↑ 43 new this week</span>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12</div>
+      <div class="stat-lbl">Strong matches (≥70%)</div>
+      <span class="stat-badge badge-green">↑ 3 since last run</span>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-lbl">Applications in progress</div>
+      <span class="stat-badge badge-amber">2 deadlines this week</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-body">
+        <div class="section-label">Top matches</div>
+        <div id="dash-top"></div>
+        <button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:10px" onclick="go('matches',document.querySelector('[onclick*=matches]'))">View all matches →</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="section-label">Your CV profile</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;font-size:13px;margin-bottom:14px">
+          <div><div style="color:var(--text-3);font-size:12px;margin-bottom:2px">Education</div><strong>Master's Degree</strong></div>
+          <div><div style="color:var(--text-3);font-size:12px;margin-bottom:2px">Experience</div><strong>8 years</strong></div>
+          <div><div style="color:var(--text-3);font-size:12px;margin-bottom:2px">Languages</div><strong>EN C2 · FR B1 · EL native</strong></div>
+          <div><div style="color:var(--text-3);font-size:12px;margin-bottom:2px">Domains</div><strong>Defence · Procurement</strong></div>
+        </div>
+        <div class="section-label">Detected keywords</div>
+        <div>
+          ${["defence policy","procurement","NATO","STANAG","budget management","strategic planning","EU institutions","contract management"].map(k=>`<span class="chip">${k}</span>`).join('')}
+        </div>
+        <div style="border:1.5px dashed var(--border);border-radius:9px;padding:14px;text-align:center;cursor:pointer;margin-top:14px" onclick="toast('CV re-uploaded and re-parsed successfully.')">
+          <div style="font-size:20px;margin-bottom:3px">↑</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-2)">Re-upload CV</div>
+          <div style="font-size:11.5px;color:var(--text-3);margin-top:2px">PDF · max 5 MB</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECENT ACTIVITY -->
+  <div style="margin-top:16px" class="card">
+    <div class="card-body">
+      <div class="section-label">Recent activity</div>
+      <div id="activity-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MATCHES ══════════════════ -->
+<div class="page" id="page-matches">
+  <div class="filter-bar">
+    <input class="input" placeholder="Search title, organisation, keyword…" oninput="filterSearch(this.value)">
+    <select class="select" onchange="filterSrc(this.value)">
+      <option value="">All sources</option>
+      <option>EU Careers</option>
+      <option>NATO</option>
+      <option>EEAS</option>
+      <option>EDA</option>
+      <option>NSPA</option>
+      <option>EuroBrussels</option>
+    </select>
+    <select class="select" onchange="filterMin(this.value)">
+      <option value="0">All scores</option>
+      <option value="70">≥ 70%</option>
+      <option value="50">≥ 50%</option>
+    </select>
+    <button class="btn btn-primary btn-sm" onclick="runMatch()">Run matching</button>
+  </div>
+  <div id="match-list" style="display:flex;flex-direction:column;gap:8px"></div>
+</div>
+
+<!-- ══════════════════ TRACKER ══════════════════ -->
+<div class="page" id="page-tracker">
+  <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between">
+    <p style="font-size:13px;color:var(--text-2)">Drag cards between columns to update status.</p>
+    <button class="btn btn-sm btn-primary" onclick="addSampleToTracker()">+ Add vacancy</button>
+  </div>
+  <div class="kanban-wrap">
+    <div class="kanban" id="kanban"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ PREPARE ══════════════════ -->
+<div class="page" id="page-write">
+  <div style="margin-bottom:20px">
+    <p style="font-size:13px;color:var(--text-2)">Your writing partner. Translates your experience into the exact language each evaluator expects.</p>
+  </div>
+  <div class="grid-2" style="align-items:start">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card card-body">
+        <div class="section-label">Vacancy</div>
+        <select class="select" style="width:100%" id="vac-sel" onchange="onVacChange()">
+          <option value="">— Choose a position —</option>
+          <option value="1">Policy Officer AD5 · DG DEFIS</option>
+          <option value="2">Procurement Specialist P3 · NATO HQ</option>
+          <option value="3">Legal Affairs Officer AD6 · EEAS</option>
+          <option value="4">Defence Analyst AD5 · EDA</option>
+        </select>
+        <div class="section-label" style="margin-top:16px">Document</div>
+        <div class="doc-toggle">
+          <button class="doc-btn on" id="btn-cl" onclick="setDoc('cl')">Cover Letter</button>
+          <button class="doc-btn" id="btn-cv" onclick="setDoc('cv')">CV Tailoring</button>
+        </div>
+      </div>
+
+      <div class="card card-body" id="gap-card" style="display:none">
+        <div class="section-label">Match analysis</div>
+        <div id="gap-body"></div>
+      </div>
+    </div>
+
+    <div class="card card-body" style="display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div class="section-label" style="margin:0">Your document</div>
+        <div style="display:flex;gap:7px">
+          <button class="btn btn-sm" onclick="copyOut()">Copy text</button>
+          <button class="btn btn-primary btn-sm" onclick="doGenerate()">✦ Write for me</button>
+        </div>
+      </div>
+      <div class="writer-out writer-placeholder" id="writer-out">Select a position above, then click "Write for me".</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PRICING ══════════════════ -->
+<div class="page" id="page-pricing">
+
+  <!-- Trial banner -->
+  <div style="max-width:820px;margin-bottom:24px;padding:10px 16px;background:var(--green-lt);border:1px solid #b8e0cb;border-radius:var(--r);display:flex;align-items:center;gap:10px">
+    <span style="font-size:16px">🎁</span>
+    <span style="font-size:13px;color:var(--green);font-weight:600">Try any plan free for 7 days — no card required to start</span>
+  </div>
+
+  <!-- Anchor box -->
+  <div style="max-width:820px;margin-bottom:28px;padding:14px 18px;background:var(--accent-lt);border:1px solid #BFDBFE;border-radius:var(--r);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div style="font-size:13px;color:var(--text-2)">
+      A career consultant charges <strong style="color:var(--text)">€150–300/hr</strong> for what Profilo does automatically, every day.
+    </div>
+    <div style="font-size:13px;font-weight:700;color:var(--accent)">Profilo Pro: €49/mo</div>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- Starter -->
+    <div class="plan">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">€19</div>
+      <div class="plan-per">/month · cancel anytime</div>
+      <hr class="plan-div">
+      <ul class="plan-feats">
+        <li>10 matches per week</li>
+        <li>Keyword gap analysis</li>
+        <li>Cover letters ≤ 400 words (3/month)</li>
+        <li>Weekly digest email</li>
+        <li class="no">Unlimited matches</li>
+        <li class="no">Full CV tailoring</li>
+        <li class="no">Application tracker</li>
+      </ul>
+      <button class="plan-btn" onclick="fakeUpgrade('Starter','€19')">Start free trial</button>
+    </div>
+
+    <!-- Pro (hero) -->
+    <div class="plan featured">
+      <div class="plan-tag">Best value</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">€49</div>
+      <div class="plan-per">/month · cancel anytime</div>
+      <hr class="plan-div">
+      <!-- Value stack -->
+      <div style="margin-bottom:12px;padding:10px;background:rgba(29,78,216,.06);border:1px solid rgba(29,78,216,.15);border-radius:8px;font-size:11px;color:var(--text-2)">
+        <div style="font-weight:700;color:var(--text);margin-bottom:6px;font-size:12px">What you're getting:</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>Unlimited AI matching</span><span style="color:var(--text-3);text-decoration:line-through">€120/mo</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>Full cover letter partner</span><span style="color:var(--text-3);text-decoration:line-through">€200/mo</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>CV tailoring per vacancy</span><span style="color:var(--text-3);text-decoration:line-through">€180/mo</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>Daily alert system</span><span style="color:var(--text-3);text-decoration:line-through">€60/mo</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>Application tracker</span><span style="color:var(--text-3);text-decoration:line-through">€80/mo</span></div>
+        <div style="border-top:1px solid rgba(29,78,216,.20);margin-top:6px;padding-top:6px;display:flex;justify-content:space-between;font-weight:700;font-size:12px">
+          <span style="color:var(--text)">Total value</span>
+          <span style="color:var(--text-3);text-decoration:line-through">€640/mo</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-weight:700;font-size:13px;margin-top:2px">
+          <span style="color:var(--accent)">You pay</span>
+          <span style="color:var(--accent)">€49/mo</span>
+        </div>
+      </div>
+      <ul class="plan-feats">
+        <li>Unlimited job matches</li>
+        <li>Full cover letters, unlimited</li>
+        <li>CV tailoring per vacancy</li>
+        <li>Daily alerts + weekly digest</li>
+        <li>Full application tracker</li>
+        <li>Priority email support</li>
+      </ul>
+      <button class="plan-btn on" onclick="fakeUpgrade('Pro','€49')">Start free trial →</button>
+    </div>
+
+    <!-- Expert -->
+    <div class="plan">
+      <div class="plan-name">Expert</div>
+      <div class="plan-price">€97</div>
+      <div class="plan-per">/month · up to 5 seats</div>
+      <hr class="plan-div">
+      <ul class="plan-feats">
+        <li>Everything in Pro</li>
+        <li>5 team seats</li>
+        <li>Weekly AI compliance audit</li>
+        <li>1:1 onboarding call</li>
+        <li>B2B API access</li>
+        <li>Priority support (1h SLA)</li>
+        <li>Shared team tracker</li>
+      </ul>
+      <button class="plan-btn" onclick="fakeUpgrade('Expert','€97')">Start free trial</button>
+    </div>
+
+  </div>
+
+  <p style="text-align:center;font-size:11px;color:var(--text-3);margin-top:20px;max-width:820px">
+    30-day money-back guarantee · Payments secured by Stripe · Cancel anytime from Settings
+  </p>
+</div>
+
+<!-- ══════════════════ SETTINGS ══════════════════ -->
+<div class="page" id="page-settings">
+  <div class="card" style="max-width:600px">
+    <div class="card-body">
+      <div class="section-label">Notifications</div>
+      <div class="settings-row">
+        <div>
+          <div style="font-weight:600;font-size:13.5px">New high-match vacancies</div>
+          <div style="font-size:12px;color:var(--text-3)">Email when a vacancy scores ≥75% against your profile</div>
+        </div>
+        <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div style="font-weight:600;font-size:13.5px">Weekly digest</div>
+          <div style="font-size:12px;color:var(--text-3)">Summary of new matches every Monday morning</div>
+        </div>
+        <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div style="font-weight:600;font-size:13.5px">Deadline reminders</div>
+          <div style="font-size:12px;color:var(--text-3)">Alert 7 days before application deadlines</div>
+        </div>
+        <button class="toggle" onclick="this.classList.toggle('on')"></button>
+      </div>
+
+      <div class="section-label" style="margin-top:22px">Profile</div>
+      <div class="settings-row">
+        <div style="font-weight:600;font-size:13.5px">Email</div>
+        <div style="font-size:13px;color:var(--text-2)">charalii19@gmail.com</div>
+      </div>
+      <div class="settings-row">
+        <div style="font-weight:600;font-size:13.5px">Plan</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span id="settings-plan" style="font-size:13px;color:var(--text-2)">Starter (trial available)</span>
+          <button class="btn btn-xs btn-primary" onclick="go('pricing',document.querySelector('[onclick*=pricing]'))">Start trial</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div style="font-weight:600;font-size:13.5px">Minimum match score</div>
+          <div style="font-size:12px;color:var(--text-3)">Only show matches above this score</div>
+        </div>
+        <select class="select" style="font-size:12px;padding:5px 10px">
+          <option>50%</option>
+          <option selected>60%</option>
+          <option>70%</option>
+          <option>80%</option>
+        </select>
+      </div>
+
+      <div class="section-label" style="margin-top:22px">Data & privacy</div>
+      <div class="settings-row">
+        <div>
+          <div style="font-weight:600;font-size:13.5px">CV data</div>
+          <div style="font-size:12px;color:var(--text-3)">Your CV is stored encrypted. Delete anytime.</div>
+        </div>
+        <button class="btn btn-xs" onclick="toast('CV data deleted from our servers.')">Delete CV</button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div style="font-weight:600;font-size:13.5px">Export your data</div>
+          <div style="font-size:12px;color:var(--text-3)">Download everything we hold about you (GDPR Art. 20)</div>
+        </div>
+        <button class="btn btn-xs" onclick="toast('Export requested. Download link sent to your email.')">Export</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /app -->
+
+<!-- VACANCY DETAIL PANEL -->
+<div class="dim" id="dim" onclick="closeDetail()"></div>
+<div class="vac-sidebar" id="vac-detail">
+  <div class="vac-sidebar-head">
+    <div>
+      <div style="font-size:15px;font-weight:700;line-height:1.3" id="det-title"></div>
+      <div style="font-size:12.5px;color:var(--text-2);margin-top:2px" id="det-org"></div>
+    </div>
+    <button class="btn btn-xs btn-ghost" onclick="closeDetail()" style="flex-shrink:0;margin-top:2px">✕</button>
+  </div>
+  <div class="vac-sidebar-body" id="det-body"></div>
+  <div class="vac-sidebar-foot" id="det-foot"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══ DATA ══════════════════════════════════════════════════════════════ */
+const JOBS = [
+  { id:1, title:"Policy Officer AD5", org:"DG DEFIS – European Commission", loc:"Brussels, Belgium", src:"EU Careers",
+    score:92, grade:"AD5", type:"Permanent", deadline:"15 Apr 2026",
+    kw:["defence policy","strategic autonomy","CSDP","procurement","NATO interoperability","budget management","EDF","spillovers"],
+    miss:["French C1","security clearance"],
+    desc:"The post holder will contribute to the implementation of EU defence industrial policy, monitor execution of EDIP and EDF programmes, and liaise with NATO structures on interoperability matters. Reports to the Head of Unit, DG DEFIS B2." },
+  { id:2, title:"Procurement Specialist P3", org:"NATO HQ – Procurement Directorate", loc:"Brussels, Belgium", src:"NATO",
+    score:87, grade:"P3", type:"3-year contract", deadline:"8 Apr 2026",
+    kw:["defence procurement","contract management","NATO standards","STANAG","budget execution","supplier evaluation"],
+    miss:["NATO Secret clearance","French B2"],
+    desc:"Responsible for managing defence procurement contracts exceeding €50M. Requires deep knowledge of NATO procurement regulations, STANAG compliance frameworks, and multi-nation coordination." },
+  { id:3, title:"Legal Affairs Officer AD6", org:"EEAS – Legal Service", loc:"Brussels, Belgium", src:"EEAS",
+    score:74, grade:"AD6", type:"Temporary Agent", deadline:"1 May 2026",
+    kw:["EU law","international law","procurement law","contract drafting","diplomatic negotiation"],
+    miss:["LL.M. or PhD in law","5+ years EU institutions"],
+    desc:"Provides legal advice on international agreements, Status of Forces Agreements, and diplomatic missions. Represents EEAS in inter-institutional legal proceedings." },
+  { id:4, title:"Defence Analyst AD5", org:"European Defence Agency", loc:"Brussels, Belgium", src:"EDA",
+    score:71, grade:"AD5", type:"Temporary Agent", deadline:"22 Apr 2026",
+    kw:["defence analysis","capability development","CARD","EDF","technology assessment","R&D"],
+    miss:["defence engineering background"],
+    desc:"Contributes to the Coordinated Annual Review on Defence (CARD), analyses Member State defence spending trends and military capability gaps. Produces assessments for the EDA Steering Board." },
+  { id:5, title:"Security Policy Officer", org:"EUISS – EU Institute for Security Studies", loc:"Paris, France", src:"EuroBrussels",
+    score:63, grade:"P4 equiv.", type:"Fixed-term 2 years", deadline:"15 May 2026",
+    kw:["security policy","research","publications","hybrid threats","transatlantic"],
+    miss:["PhD preferred","French C1","publishing record"],
+    desc:"Conducts research and produces policy briefs on European security architecture, hybrid threats, and transatlantic relations. Expected to publish 4+ papers per year." },
+  { id:6, title:"Finance Officer AD5", org:"NSPA – NATO Support and Procurement Agency", loc:"Luxembourg", src:"NSPA",
+    score:55, grade:"P3", type:"Permanent", deadline:"30 Apr 2026",
+    kw:["financial management","IPSAS","budget execution","internal audit","reporting"],
+    miss:["CPA/ACCA certification","French B2","IPSAS experience"],
+    desc:"Manages financial reporting and budget execution for multinational logistics support programmes. Prepares IPSAS-compliant financial statements for the NSPA Supervisory Board." },
+  { id:7, title:"Communications Advisor P4", org:"EEAS – Strategic Communications", loc:"Brussels, Belgium", src:"EEAS",
+    score:48, grade:"P4", type:"Temporary Agent", deadline:"20 May 2026",
+    kw:["strategic communications","media relations","EU external action","disinformation"],
+    miss:["journalism background","Arabic or Chinese C1","social media expertise"],
+    desc:"Develops and implements strategic communications for EU external action, countering disinformation and strengthening EU narratives in partner countries." },
+];
+
+const BOARD = {
+  "Interested": [{title:"Policy Officer AD5",org:"DG DEFIS",score:92},{title:"Defence Analyst AD5",org:"EDA",score:71}],
+  "Applied":    [{title:"Procurement Specialist P3",org:"NATO HQ",score:87}],
+  "Screening":  [],
+  "Interview":  [{title:"Legal Affairs Officer AD6",org:"EEAS",score:74}],
+  "Offer":      [],
+  "Rejected":   [{title:"Finance Officer AD5",org:"NSPA",score:55}],
+  "Withdrawn":  [],
+};
+
+const ACTIVITIES = [
+  { icon:"◎", text:"<strong>Policy Officer AD5</strong> — match score updated to 92%", time:"2 hours ago" },
+  { icon:"⏰", text:"<strong>Procurement Specialist P3</strong> — deadline in 11 days", time:"Today" },
+  { icon:"✦", text:"Cover letter drafted for <strong>Legal Affairs Officer AD6</strong>", time:"Yesterday" },
+  { icon:"↑",  text:"<strong>43 new vacancies</strong> added across all sources", time:"Yesterday" },
+  { icon:"◫",  text:"CV re-analysed — 3 new keyword matches detected", time:"3 days ago" },
+];
+
+let _s="", _src="", _min=0, _doc="cl", _drag=null;
+
+/* ══ NAVIGATION ════════════════════════════════════════════════════════ */
+const PAGE_TITLES = {
+  dashboard:"Dashboard", matches:"Matches", tracker:"Tracker",
+  write:"Prepare", pricing:"Pricing", settings:"Settings"
+};
+
+function go(id, btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  document.getElementById('topbar-title').textContent = PAGE_TITLES[id]||id;
+  window.scrollTo(0,0);
+}
+
+/* ══ DASHBOARD ══════════════════════════════════════════════════════════ */
+function initDash() {
+  document.getElementById('dash-top').innerHTML = JOBS.slice(0,3).map(j=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-lt);cursor:pointer" onclick="openDetail(${j.id})">
+      <div class="score-ring ${sc(j.score)}" style="width:40px;height:40px;font-size:12px">${j.score}%</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${j.title}</div>
+        <div style="font-size:12px;color:var(--text-3)">${j.org.split('–')[0].trim()} · ${j.loc.split(',')[0]}</div>
+      </div>
+      <span class="tag ${j.src==='NATO'?'tag-nato':'tag-eu'}">${j.src}</span>
+    </div>
+  `).join('') + '<div style="padding:2px 0"></div>';
+
+  document.getElementById('activity-feed').innerHTML = ACTIVITIES.map(a=>`
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-lt)">
+      <div style="width:28px;height:28px;border-radius:99px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">${a.icon}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;line-height:1.4">${a.text}</div>
+        <div style="font-size:11.5px;color:var(--text-3);margin-top:2px">${a.time}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ══ MATCHES ════════════════════════════════════════════════════════════ */
+function sc(s){ return s>=75?"sh":s>=55?"sm":"sl"; }
+
+function renderMatches() {
+  const list = JOBS.filter(j=>
+    j.score>=_min &&
+    (_src===''||j.src===_src) &&
+    (_s===''||[j.title,j.org,...j.kw].join(' ').toLowerCase().includes(_s))
+  );
+  const el = document.getElementById('match-list');
+  el.innerHTML = list.length ? list.map(j=>`
+    <div class="match-card" onclick="openDetail(${j.id})">
+      <div class="score-ring ${sc(j.score)}">${j.score}%</div>
+      <div class="match-body">
+        <div class="match-title">${j.title}</div>
+        <div class="match-org">${j.org} · <span style="color:var(--text-3)">${j.loc}</span></div>
+        <div class="match-tags" style="margin-top:7px">
+          <span class="tag ${j.src==='NATO'?'tag-nato':'tag-eu'}">${j.src}</span>
+          <span class="tag tag-grey">${j.grade}</span>
+          <span class="tag tag-grey">${j.type}</span>
+          <span class="tag tag-date">⏰ ${j.deadline}</span>
+          ${j.kw.slice(0,3).map(k=>`<span class="tag tag-grey">${k}</span>`).join('')}
+          ${j.miss.map(k=>`<span class="tag tag-miss">⚠ ${k}</span>`).join('')}
+        </div>
+      </div>
+      <div class="match-actions">
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();genFor(${j.id})">Write</button>
+        <button class="btn btn-sm" onclick="event.stopPropagation();addBoard(${j.id})">+ Track</button>
+      </div>
+    </div>
+  `).join('') : '<div style="padding:40px;text-align:center;color:var(--text-3)">No matches for current filters.</div>';
+}
+
+function filterSearch(v){ _s=v.toLowerCase(); renderMatches(); }
+function filterSrc(v){ _src=v; renderMatches(); }
+function filterMin(v){ _min=parseInt(v); renderMatches(); }
+function runMatch(){
+  toast('Running matching algorithm…');
+  setTimeout(()=>toast('✓ Matching complete — 7 results.'),2000);
+}
+
+/* ══ DETAIL PANEL ═══════════════════════════════════════════════════════ */
+function openDetail(id) {
+  const j = JOBS.find(x=>x.id===id);
+  document.getElementById('det-title').textContent = j.title;
+  document.getElementById('det-org').textContent = `${j.org} · ${j.loc}`;
+  document.getElementById('det-body').innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+      <div class="score-ring ${sc(j.score)}" style="width:52px;height:52px;font-size:14px">${j.score}%</div>
+      <div>
+        <div style="font-weight:700;font-size:14px">${j.score>=75?'Strong match':j.score>=55?'Good match':'Partial match'}</div>
+        <div style="font-size:12.5px;color:var(--text-2)">${j.grade} · ${j.type}</div>
+        <div style="font-size:12px;color:var(--amber);margin-top:2px">⏰ Deadline: ${j.deadline}</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:18px">${j.desc}</p>
+    <div style="height:1px;background:var(--border-lt);margin-bottom:16px"></div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--green);margin-bottom:8px">Matched keywords</div>
+    <div style="margin-bottom:16px">${j.kw.map(k=>`<span class="chip">${k}</span>`).join('')}</div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--red);margin-bottom:8px">Gaps to address</div>
+    <div style="margin-bottom:0">${j.miss.map(k=>`<span class="chip" style="background:var(--red-lt);border-color:#ECC8C8;color:var(--red)">${k}</span>`).join('')}</div>
+  `;
+  document.getElementById('det-foot').innerHTML = `
+    <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center" onclick="genFor(${j.id});closeDetail()">✦ Write for me</button>
+    <button class="btn btn-sm" onclick="addBoard(${j.id});closeDetail()">+ Track</button>
+    <button class="btn btn-sm btn-ghost" onclick="toast('Opening vacancy in new tab…');window.open('https://careers.eu','')" style="padding:5px 8px">↗</button>
+  `;
+  document.getElementById('vac-detail').classList.add('open');
+  document.getElementById('dim').classList.add('open');
+}
+
+function closeDetail() {
+  document.getElementById('vac-detail').classList.remove('open');
+  document.getElementById('dim').classList.remove('open');
+}
+
+/* ══ KANBAN ═════════════════════════════════════════════════════════════ */
+function renderBoard() {
+  document.getElementById('kanban').innerHTML = Object.entries(BOARD).map(([col,items])=>`
+    <div class="k-col" ondragover="event.preventDefault()" ondrop="dropCard(event,'${col}')">
+      <div class="k-col-head">
+        <span class="k-col-name">${col}</span>
+        <span class="k-col-count">${items.length}</span>
+      </div>
+      ${items.map(item=>`
+        <div class="k-item" draggable="true" ondragstart="_drag='${item.title.replace(/'/g,"\\'")}'">
+          <div class="k-item-title">${item.title}</div>
+          <div class="k-item-org">${item.org}</div>
+          <div class="k-item-tag"><span class="tag tag-grey" style="font-size:11px">${item.score}% match</span></div>
+        </div>
+      `).join('')}
+      <div class="k-drop">drop here</div>
+    </div>
+  `).join('');
+}
+
+function dropCard(e,col){
+  e.preventDefault();
+  if(!_drag) return;
+  let found=null;
+  Object.keys(BOARD).forEach(c=>{
+    const i=BOARD[c].findIndex(x=>x.title===_drag);
+    if(i>-1) found=BOARD[c].splice(i,1)[0];
+  });
+  if(found) BOARD[col].push(found);
+  renderBoard();
+  toast(`Moved to "${col}"`);
+  _drag=null;
+}
+
+function addBoard(id) {
+  const j=JOBS.find(x=>x.id===id);
+  if(!Object.values(BOARD).flat().some(i=>i.title===j.title))
+    BOARD["Interested"].push({title:j.title,org:j.org.split('–')[0].trim(),score:j.score});
+  renderBoard();
+  toast(`"${j.title}" added to tracker.`);
+}
+
+function addSampleToTracker() {
+  const untracked = JOBS.filter(j=>!Object.values(BOARD).flat().some(i=>i.title===j.title));
+  if(!untracked.length){ toast('All vacancies already tracked.'); return; }
+  const j=untracked[0];
+  BOARD["Interested"].push({title:j.title,org:j.org.split('–')[0].trim(),score:j.score});
+  renderBoard();
+  toast(`"${j.title}" added to tracker.`);
+}
+
+/* ══ PREPARE (WRITER) ═══════════════════════════════════════════════════ */
+const LETTERS = {
+  1:`Dear Selection Committee,
+
+I am writing to express my strong interest in the Policy Officer AD5 position at DG DEFIS (Reference: DEFIS/2026/AD5/001).
+
+With eight years of experience in defence procurement and policy — including direct management of contracts exceeding €50M under STANAG frameworks and participation in CSDP operational planning — I bring the institutional knowledge this role demands. My work on strategic autonomy initiatives and cross-institutional coordination with NATO aligns directly with the post's mandate under the European Defence Industrial Programme.
+
+My academic background in International Relations, combined with hands-on experience managing classified procurement procedures, positions me to contribute immediately to EDF implementation. I have a proven record of translating complex regulatory frameworks into actionable policy — precisely the competency profile described in the vacancy notice.
+
+I look forward to discussing how my experience meets DG DEFIS's operational needs.
+
+Yours sincerely,
+Charalampos [Surname]`,
+  2:`Dear NATO Procurement Directorate,
+
+I am applying for the Procurement Specialist P3 position (Ref: NATO-PROC-2026-P3-042).
+
+My eight years managing defence procurement under NATO STANAG 4107 frameworks directly address the core requirements of this post. I have extensive experience in supplier evaluation, contract lifecycle management, and compliance verification against NATO Procurement Directives — including contracts valued above the NCS threshold.
+
+A particular strength I bring is fluency in both the technical and regulatory dimensions of Alliance contracting: from initial requirements definition through classified execution phases. My experience coordinating with Defence Ministries across multiple Member States has developed the political sensitivity unique to NATO acquisition environments.
+
+I am available for interview at NATO HQ Brussels at your convenience.
+
+Sincerely,
+Charalampos [Surname]`,
+  3:`Dear Selection Committee,
+
+I am writing to apply for the Legal Affairs Officer AD6 position at the EEAS Legal Service.
+
+My background combines legal expertise in EU institutional law with direct experience in international agreements and procurement law. I have drafted and negotiated contracts under the EU Financial Regulation and advised on Status of Forces Agreements in operational contexts.
+
+I am particularly drawn to the EEAS mandate at the intersection of EU external action and international law — an area where my experience in multilateral negotiation and my knowledge of diplomatic frameworks would add immediate value.
+
+I would welcome the opportunity to contribute to the EEAS Legal Service's work.
+
+Yours faithfully,
+Charalampos [Surname]`,
+};
+
+const CV_ADVICE = {
+  1:`CV TAILORING — DG DEFIS POLICY OFFICER AD5
+
+━━ HEADLINE
+Replace: "Defence & Procurement Professional"
+With: "EU Defence Policy & Industrial Strategy Specialist"
+
+━━ EXPERIENCE BULLETS
+Use EPSO-compliant language:
+✗  "Managed procurement contracts"
+✓  "Managed defence contracts valued at €X in accordance with EU Financial Regulation 2018/1046 and STANAG 4107, with zero ECA audit findings across 3 review cycles"
+
+━━ REGULATORY REFERENCES TO ADD
+· Regulation (EU) 2021/697 (EDF)
+· EDIP framework and DG DEFIS B2 mandate
+· CSDP Decision [relevant one if applicable]
+· Council Decision on PESCO (if relevant)
+
+━━ LANGUAGE GAP
+Add: "French: B1 (active improvement — enrolled in [institute name])"
+This addresses the C1 requirement directly.
+
+━━ MISSING KEYWORDS (insert naturally)
+"strategic autonomy" · "spillovers" · "dual-use" · "CARD" · "EDA coordination" · "defence industrial base"`,
+  2:`CV TAILORING — NATO PROCUREMENT SPECIALIST P3
+
+━━ HEADLINE
+Replace: "Procurement Manager"
+With: "NATO Defence Procurement Specialist — STANAG & Multi-Nation Contracting"
+
+━━ EXPERIENCE
+Lead with scale and compliance:
+✓  "Managed contracts exceeding €50M under STANAG 4107, coordinating with 6 NATO member DAs"
+
+━━ ADD REFERENCES TO
+· AC/4 Procurement Directives
+· NSPA/NATO Support Framework
+· ITAR/EAR awareness (if applicable)
+· NCS threshold procedures
+
+━━ CERTIFICATION
+Note any NATO CPD training or NCI Agency exposure.
+
+━━ LANGUAGE GAP
+"French: B1 — actively developing toward B2 for NATO bilingual operational requirements"`,
+};
+
+function onVacChange() {
+  const id=parseInt(document.getElementById('vac-sel').value);
+  const j=JOBS.find(x=>x.id===id);
+  const gc=document.getElementById('gap-card');
+  if(!j){ gc.style.display='none'; return; }
+  gc.style.display='block';
+  document.getElementById('gap-body').innerHTML=`
+    <div style="margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--green);margin-bottom:6px">Matched</div>
+      ${j.kw.map(k=>`<span class="chip">${k}</span>`).join('')}
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--red);margin-bottom:6px">Gaps to address</div>
+      ${j.miss.map(k=>`<span class="chip" style="background:var(--red-lt);border-color:#ECC8C8;color:var(--red)">${k}</span>`).join('')}
+    </div>
+    <div style="margin-top:12px;font-size:12px;font-weight:700;color:var(--text)">Overall: <span class="tag ${j.score>=75?'tag-green':j.score>=55?'tag-date':'tag-miss'}">${j.score}% match</span></div>
+  `;
+}
+
+function setDoc(t){
+  _doc=t;
+  document.getElementById('btn-cl').className='doc-btn'+(t==='cl'?' on':'');
+  document.getElementById('btn-cv').className='doc-btn'+(t==='cv'?' on':'');
+}
+
+function genFor(id){
+  go('write', document.querySelector('[onclick*="write"]'));
+  document.getElementById('vac-sel').value=id;
+  onVacChange();
+  doGenerate();
+}
+
+async function doGenerate(){
+  const id=parseInt(document.getElementById('vac-sel').value);
+  if(!id){ toast('Select a position first.'); return; }
+  const j=JOBS.find(x=>x.id===id);
+  const el=document.getElementById('writer-out');
+  el.className='writer-out';
+  el.textContent='';
+
+  const content = _doc==='cl'
+    ? (LETTERS[id] || `Dear Selection Committee,\n\nI am writing to apply for the ${j.title} position at ${j.org}.\n\nWith eight years of experience in defence policy and procurement, I bring expertise in ${j.kw.slice(0,3).join(', ')} — the core competencies your vacancy notice identifies.\n\nI would welcome the opportunity to contribute to ${j.org.split('–')[0].trim()}'s work.\n\nYours sincerely,\nCharalampos [Surname]`)
+    : (CV_ADVICE[id] || `CV TAILORING — ${j.title.toUpperCase()}\n\nKey recommendations:\n\n1. Reframe your headline to match the institutional language of ${j.org}.\n2. Reference the specific EU/NATO regulations cited in the notice.\n3. Address gaps directly: ${j.miss.join(', ')}.\n4. Quantify achievements using EU Financial Regulation terminology.\n5. Insert missing keywords naturally: ${j.kw.filter((_,i)=>i>3).join(', ')}.`);
+
+  for(let c of content){
+    el.textContent+=c;
+    el.scrollTop=el.scrollHeight;
+    await new Promise(r=>setTimeout(r,8));
+  }
+}
+
+function copyOut(){
+  const t=document.getElementById('writer-out').textContent;
+  if(!t||t.includes('Select a position')) return;
+  navigator.clipboard.writeText(t).then(()=>toast('Copied to clipboard.'));
+}
+
+/* ══ PRICING ════════════════════════════════════════════════════════════ */
+function fakeUpgrade(plan, price){
+  toast(`Starting 7-day free trial — ${plan} ${price}/month…`);
+  setTimeout(()=>{
+    const unlimited = plan === 'Pro' || plan === 'Expert';
+    const label = unlimited ? `${plan} plan · Unlimited` : `${plan} plan · 10 matches/wk`;
+    document.getElementById('plan-label').textContent = label;
+    document.getElementById('settings-plan').textContent = plan;
+    if(unlimited) document.querySelector('.free-bar').style.display='none';
+    document.querySelector('.upgrade-btn').textContent = 'Manage billing →';
+    toast(`✓ Trial started — ${plan} features unlocked for 7 days.`);
+    go('dashboard', document.querySelector('[onclick*="dashboard"]'));
+  },2200);
+}
+
+/* ══ TOAST ══════════════════════════════════════════════════════════════ */
+let _tid;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(_tid); _tid=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ══ INIT ═══════════════════════════════════════════════════════════════ */
+initDash();
+renderMatches();
+renderBoard();
+</script>
+</body>
+</html>
