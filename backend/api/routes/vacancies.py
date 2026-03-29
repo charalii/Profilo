@@ -100,7 +100,7 @@ async def create_vacancy(
         contract_type=data.contract_type,
         deadline=data.deadline,
         description=data.description,
-        url=data.url or "https://hirescope.app/jobs/pending",
+        url=data.url or "https://profilo.app/jobs/pending",
         keywords=data.keywords or [],
         salary_range=data.salary_range,
         is_active=True,
@@ -108,7 +108,7 @@ async def create_vacancy(
     db.add(vacancy)
     await db.flush()
     if not data.url:
-        vacancy.url = f"https://hirescope.app/jobs/{vacancy.id}"
+        vacancy.url = f"https://profilo.app/jobs/{vacancy.id}"
     await db.commit()
     await db.refresh(vacancy)
     return vacancy

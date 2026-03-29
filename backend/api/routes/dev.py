@@ -23,8 +23,8 @@ router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 DEV_EMAIL = {
-    "candidate": "dev+candidate@hirescope.local",
-    "recruiter": "dev+recruiter@hirescope.local",
+    "candidate": "dev+candidate@profilo.local",
+    "recruiter": "dev+recruiter@profilo.local",
 }
 
 
@@ -41,7 +41,7 @@ class DevTokenRequest(BaseModel):
 async def dev_status():
     _require_dev()
     return {
-        "hirescope_dev": True,
+        "profilo_dev": True,
         "message": "Dev endpoints enabled. Do not enable HIRESCOPE_DEV in production.",
     }
 

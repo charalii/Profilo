@@ -116,7 +116,7 @@ describe("Landing Page", () => {
         screen.getByText(/cover letter generator understands/i)
       ).toBeInTheDocument();
       expect(
-        screen.getByText(/recommended HireScope to every single/i)
+        screen.getByText(/recommended Profilo to every single/i)
       ).toBeInTheDocument();
     });
 
@@ -139,11 +139,11 @@ describe("Landing Page", () => {
 
     it("renders all 8 FAQ questions", () => {
       const questions = [
-        "How does HireScope find vacancies?",
+        "How does Profilo find vacancies?",
         "How accurate is the matching?",
         "Is my CV data safe?",
         "What file format does my CV need to be?",
-        "Can I use HireScope if I'm outside the EU?",
+        "Can I use Profilo if I'm outside the EU?",
         "What's included in the free plan?",
         "How is this different from LinkedIn or Jobscan?",
         "Can I cancel anytime?",

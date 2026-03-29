@@ -29,6 +29,9 @@ class User(Base):
     name = Column(String(255))
     hashed_password = Column(String(255))
     plan = Column(String(20), default="free")
+    stripe_customer_id = Column(String(255), nullable=True, unique=True)
+    stripe_subscription_id = Column(String(255), nullable=True)
+    plan_expires_at = Column(DateTime, nullable=True)
     # "candidate" | "recruiter"
     role = Column(String(20), default="candidate", nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
