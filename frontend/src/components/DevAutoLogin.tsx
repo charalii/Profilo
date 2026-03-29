@@ -32,7 +32,7 @@ export function DevAutoLogin() {
       .then((data) => {
         if (data?.access_token) {
           localStorage.setItem("token", data.access_token);
-          window.dispatchEvent(new CustomEvent("hirescope-auth"));
+          window.dispatchEvent(new CustomEvent("profilo-auth"));
           window.location.reload();
         }
       })

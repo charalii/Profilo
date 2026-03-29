@@ -114,7 +114,7 @@ export function AppNav() {
   return (
     <nav className="site-nav">
       <Link href="/dashboard" className="nav-logo">
-        Hire<span>Scope</span>
+        Profilo<span>.</span>
       </Link>
       <ul className="nav-app-links">
         {process.env.NEXT_PUBLIC_HIRESCOPE_DEV === "1" && (

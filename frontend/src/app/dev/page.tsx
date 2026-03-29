@@ -42,7 +42,7 @@ export default function DevToolsPage() {
       const data = await api.devToken(role);
       localStorage.setItem("token", data.access_token);
       pushLog(`Logged in as ${role} (token stored).`);
-      window.dispatchEvent(new CustomEvent("hirescope-auth"));
+      window.dispatchEvent(new CustomEvent("profilo-auth"));
       window.location.reload();
     } catch (e) {
       pushLog(`Login failed: ${e instanceof Error ? e.message : "error"}`);

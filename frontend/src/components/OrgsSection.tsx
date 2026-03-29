@@ -6,6 +6,7 @@ interface Org {
   id: string;
   name: string;
   abbreviation: string;
+  logo: string;
   tagline: string;
   portal: string;
   description: string;
@@ -20,6 +21,7 @@ const orgs: Org[] = [
     id: 'eu',
     name: 'European Union',
     abbreviation: 'EU',
+    logo: '/logos/eu.svg',
     tagline: 'European Commission, Parliament, Council & 40+ Agencies',
     portal: 'EPSO — European Personnel Selection Office',
     description:
@@ -40,6 +42,7 @@ const orgs: Org[] = [
     id: 'nato',
     name: 'NATO',
     abbreviation: 'NATO',
+    logo: '/logos/nato.svg',
     tagline: 'North Atlantic Treaty Organization — Brussels & Commands worldwide',
     portal: 'NATO Taleo — nato.taleo.net',
     description:
@@ -60,6 +63,7 @@ const orgs: Org[] = [
     id: 'un',
     name: 'United Nations',
     abbreviation: 'UN',
+    logo: '/logos/un.svg',
     tagline: 'UN Secretariat, Programmes & Specialized Agencies worldwide',
     portal: 'UN Careers — careers.un.org',
     description:
@@ -80,6 +84,7 @@ const orgs: Org[] = [
     id: 'oecd',
     name: 'OECD',
     abbreviation: 'OECD',
+    logo: '/logos/oecd.svg',
     tagline: 'Organisation for Economic Co-operation and Development — Paris',
     portal: 'OECD Careers — oecd.org/careers',
     description:
@@ -100,6 +105,7 @@ const orgs: Org[] = [
     id: 'osce',
     name: 'OSCE',
     abbreviation: 'OSCE',
+    logo: '/logos/osce.svg',
     tagline: 'Organisation for Security and Co-operation in Europe — Vienna & Field',
     portal: 'OSCE Jobs — jobs.osce.org',
     description:
@@ -160,7 +166,8 @@ export function OrgsSection() {
           style={{ '--org-color': org.color } as React.CSSProperties}
         >
           <div className="org-watermark" aria-hidden="true">
-            {org.abbreviation}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={org.logo} alt="" />
           </div>
           <div className="org-content">
             <div>
