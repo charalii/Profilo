@@ -1,4 +1,4 @@
-.PHONY: dev migrate scrape stripe-listen logs stop reset
+.PHONY: dev migrate scrape check-scrapers stripe-listen logs stop reset
 
 dev:
 	docker compose up --build
@@ -8,6 +8,9 @@ migrate:
 
 scrape:
 	docker compose exec backend python -m backend.tasks.scrape_tasks
+
+check-scrapers:
+	docker compose exec backend python -m backend.scripts.check_scrapers
 
 stripe-listen:
 	stripe listen --forward-to localhost:8000/api/billing/webhook
