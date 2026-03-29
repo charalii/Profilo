@@ -27,7 +27,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <AppNav />
       <div className="app-main">{children}</div>
       <footer className="app-footer">
-        <p>&copy; 2026 HireScope</p>
+        <p>&copy; 2026 Profilo</p>
       </footer>
     </>
   );
