@@ -10,8 +10,8 @@
   --sand:     #F5F2EE;
   --sand-2:   #EDE9E4;
   --white:    #FFFFFF;
-  --accent:   #1A56DB;
-  --accent-2: #1234AA;
+  --accent:   #1E3A8A;
+  --accent-2: #142966;
   --border:   #DDD9D3;
   --border-lt:#EEEBE6;
   --serif:    var(--font-serif), 'Cormorant Garamond', Georgia, serif;
@@ -134,7 +134,7 @@ a { color: inherit; text-decoration: none; }
 .hero::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(26,86,219,.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(30,58,138,.07) 0%, transparent 70%);
   pointer-events: none;
 }
 .hero > * { position: relative; z-index: 1; }
@@ -307,18 +307,20 @@ a { color: inherit; text-decoration: none; }
 .org-block:nth-child(even) { background: var(--sand); }
 
 .org-watermark {
-  position: absolute; top: 50%; left: 50%;
+  position: absolute;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(280px, 55vw, 700px);
-  height: auto;
-  opacity: 0.06;
+  width: clamp(260px, 42vw, 560px);
+  height: clamp(260px, 42vw, 560px);
+  opacity: 0.07;
   pointer-events: none; user-select: none;
   z-index: 0;
+  display: flex; align-items: center; justify-content: center;
 }
 .org-watermark img {
-  width: 100%; height: auto;
+  width: 100%; height: 100%;
+  object-fit: contain;
   display: block;
-  filter: grayscale(1);
 }
 
 .org-content {
@@ -659,7 +661,7 @@ details[open] summary::after { transform: rotate(45deg); }
 }
 .nav-app-links a { color: #cbd5e1; text-decoration: none; font-size: .9rem; transition: color .2s; }
 .nav-app-links a:hover { color: #fff; }
-.nav-app-active { color: #06B6D4 !important; font-weight: 600; }
+.nav-app-active { color: #4F8EF7 !important; font-weight: 600; }
 .nav-app-actions { display: flex; align-items: center; gap: .75rem; }
 .nav-user-email {
   font-size: .78rem; color: #94a3b8;
