@@ -28,14 +28,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libasound2 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt ./backend/requirements.txt
-RUN pip install --no-cache-dir -r backend/requirements.txt
+# Copy requirements first (layer cache)
+COPY backend/requirements.txt ./requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Install Playwright's Chromium browser
 RUN playwright install chromium
 
-# Copy backend code into /app/backend so "backend.api.main" module path works
-COPY . ./backend/
+# Copy entire repo so "backend" package is importable as backend.api.main
+COPY . .
 
 EXPOSE 8000
 
