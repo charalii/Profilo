@@ -40,5 +40,5 @@ COPY . .
 
 EXPOSE 8000
 
-# Shell form so ${PORT} env var is expanded at runtime
-CMD uvicorn backend.api.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 2
+RUN chmod +x start.sh
+CMD ["/bin/sh", "start.sh"]
