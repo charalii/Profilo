@@ -38,7 +38,7 @@ RUN playwright install chromium
 # Copy entire repo so "backend" package is importable as backend.api.main
 COPY . .
 
-EXPOSE 8000
+EXPOSE 8080
 
 RUN chmod +x start.sh
 CMD ["/bin/sh", "start.sh"]
