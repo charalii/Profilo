@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import exc as sa_exc
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from backend.api.deps import engine
@@ -31,7 +32,10 @@ logger = logging.getLogger("profilo")
 async def lifespan(application: FastAPI):
     # Startup: create tables if they don't exist
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+        try:
+            await conn.run_sync(Base.metadata.create_all)
+        except (sa_exc.IntegrityError, sa_exc.ProgrammingError) as e:
+            logger.warning(f"Database tables already exist, skipping create_all: {e}")
     logger.info("Database tables ready")
     yield
     # Shutdown: dispose engine connection pool
