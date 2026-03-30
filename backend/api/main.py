@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 from collections import defaultdict
 from contextlib import asynccontextmanager
@@ -30,6 +31,8 @@ logger = logging.getLogger("profilo")
 @asynccontextmanager
 async def lifespan(application: FastAPI):
     # Startup: create tables if they don't exist
+    port = os.environ.get("PORT", "8080")
+    logger.info("Profilo API starting (PORT=%s)", port)
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     logger.info("Database tables ready")
