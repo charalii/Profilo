@@ -15,7 +15,7 @@ SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
-FROM_EMAIL = os.getenv("FROM_EMAIL", "alerts@profilo.app")
+FROM_EMAIL = os.getenv("FROM_EMAIL", "alerts@profilo.dev")
 
 
 async def send_application_status_email(
@@ -49,7 +49,7 @@ async def send_application_status_email(
         <p>Hi {user_name or 'there'},</p>
         <p>Your application for <strong>{job_title}</strong> at {organization} is now
         <strong>{new_status}</strong> (was {old_status}).</p>
-        <p><a href="https://profilo.app/tracker" style="color: #1a56db;">Open tracker</a></p>
+        <p><a href="https://profilo.dev/tracker" style="color: #1a56db;">Open tracker</a></p>
     </body></html>
     """
 
@@ -125,7 +125,7 @@ async def send_alert_email(user_email: str, user_name: str, matches: list[dict])
         </div>
         """
     html_content += """
-        <p><a href="https://profilo.app/dashboard" style="background: #1a56db; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none;">Go to Dashboard</a></p>
+        <p><a href="https://profilo.dev/dashboard" style="background: #1a56db; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none;">Go to Dashboard</a></p>
     </body></html>
     """
 
