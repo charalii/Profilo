@@ -103,6 +103,7 @@ app.add_middleware(
     allow_origins=[
         *_LOCAL_ORIGINS,
         "https://profilo.dev",
+        "https://www.profilo.dev",
     ],
     allow_origin_regex=r"^http://(localhost|127\.0\.0\.1):\d+$",
     allow_credentials=True,
