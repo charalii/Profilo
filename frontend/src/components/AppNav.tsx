@@ -6,6 +6,38 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import type { User } from "@/lib/types";
 
+function ThemeToggle() {
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("theme");
+    const dark = stored !== "light";
+    setIsDark(dark);
+  }, []);
+
+  function toggle() {
+    const next = isDark ? "light" : "dark";
+    setIsDark(!isDark);
+    localStorage.setItem("theme", next);
+    if (next === "light") {
+      document.documentElement.classList.remove("dark");
+    } else {
+      document.documentElement.classList.add("dark");
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label="Toggle theme"
+      style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.1rem", padding: "0 0.25rem" }}
+    >
+      {isDark ? "☀️" : "🌙"}
+    </button>
+  );
+}
+
 export function AppNav() {
   const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
@@ -127,6 +159,7 @@ export function AppNav() {
         {user?.role === "recruiter" ? recruiterLinks : candidateLinks}
       </ul>
       <div className="nav-app-actions">
+        <ThemeToggle />
         {user ? (
           <>
             <span className="nav-user-email" title={user.email}>

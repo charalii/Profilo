@@ -73,7 +73,7 @@ export default function DashboardPage() {
 
         {analytics && (
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-slate-700 bg-slate-900/60 p-5">
+            <div className="rounded-xl border border-slate-700 bg-slate-800 p-5">
               <p className="text-xs uppercase tracking-wide text-slate-500">
                 Open jobs
               </p>
@@ -81,7 +81,7 @@ export default function DashboardPage() {
                 {analytics.open_jobs}
               </p>
             </div>
-            <div className="rounded-xl border border-slate-700 bg-slate-900/60 p-5">
+            <div className="rounded-xl border border-slate-700 bg-slate-800 p-5">
               <p className="text-xs uppercase tracking-wide text-slate-500">
                 Applications
               </p>
@@ -89,7 +89,7 @@ export default function DashboardPage() {
                 {analytics.total_applications}
               </p>
             </div>
-            <div className="rounded-xl border border-slate-700 bg-slate-900/60 p-5">
+            <div className="rounded-xl border border-slate-700 bg-slate-800 p-5">
               <p className="text-xs uppercase tracking-wide text-slate-500">
                 Last 7 days
               </p>
@@ -97,7 +97,7 @@ export default function DashboardPage() {
                 {analytics.applications_last_7_days}
               </p>
             </div>
-            <div className="rounded-xl border border-slate-700 bg-slate-900/60 p-5">
+            <div className="rounded-xl border border-slate-700 bg-slate-800 p-5">
               <p className="text-xs uppercase tracking-wide text-slate-500">
                 Status mix
               </p>

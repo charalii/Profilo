@@ -34,6 +34,7 @@ export default function ProfilePage() {
   async function onUploaded() {
     const p = await api.getProfile();
     setProfile(p);
+    try { await api.computeMatches(); } catch { /* no vacancies yet */ }
   }
 
   async function addKeyword() {
